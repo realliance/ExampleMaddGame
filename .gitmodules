@@ -1,0 +1,3 @@
+[submodule "libraries/madd"]
+	path = libraries/madd
+	url = git@github.com:realliance/madd.git
