@@ -16,6 +16,7 @@ class Cube : public GameObject{
     private:
         RenderedObject* cubeMesh;
         std::vector<glm::vec3> cubePositions;
+		int textures[2];
         Madd* context;
 };
 

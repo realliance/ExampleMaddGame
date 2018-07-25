@@ -60,7 +60,8 @@ Cube::Cube(Madd* context):context(context){
         glm::vec3(-1.3f,  1.0f, -1.5f)  
     };
     cubeMesh = new RenderedObject(this);
-    cubeMesh->RenderInit(vertices,"default.vs","default.fs","container.jpg");
+    textures[0]=cubeMesh->RenderInit(vertices,"default.vs","default.fs","container.jpg");
+	textures[1]=cubeMesh->AddTexture("logo.png");
 }
 
 Cube::~Cube(){
@@ -70,6 +71,7 @@ Cube::~Cube(){
 bool Cube::Render(){
     int i = 0;
     for(auto const pos : cubePositions){
+		cubeMesh->SetTexture(textures[i % 2]);
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, pos);
         float angle = context->GetTime()/10.f + glm::radians(i*20.0f);
@@ -84,7 +86,8 @@ bool Cube::Render(){
 }
 
 bool Cube::ReloadShaders(){
-    return cubeMesh->LoadShader();
+	cubeMesh->LoadShader();
+	return true;
 }
 
 bool Cube::Update(){
