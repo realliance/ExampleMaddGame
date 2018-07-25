@@ -7,4 +7,4 @@ target_sources(example
         "${DIR}/gamecamera.cpp"
 )
 target_include_directories(example PRIVATE "${example_SOURCE_DIR}/include")
-target_include_directories(example PRIVATE "${madd_SOURCE_DIR}/include/engine")
+target_include_directories(example PRIVATE "${madd_SOURCE_DIR}/include")
