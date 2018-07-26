@@ -70,10 +70,11 @@ Cube::~Cube(){
 
 bool Cube::Render(){
     int i = 0;
+    glm::vec3 offset = glm::vec3(3.0f,3.0f,3.0f);
     for(auto const pos : cubePositions){
 		cubeMesh->SetTexture(textures[i % 2]);
         glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, pos);
+        model = glm::translate(model, pos+offset);
         float angle = context->GetTime()/10.f + glm::radians(i*20.0f);
         glm::vec3 axis = glm::vec3(1.0f, 0.3f, 0.5f);
         model = glm::rotate(model, angle, axis);
@@ -82,6 +83,7 @@ bool Cube::Render(){
             return false;
         i++;
     }
+    cubeMesh->SetTransformation(glm::mat4(1.0f));
     return true;
 }
 
