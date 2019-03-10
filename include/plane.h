@@ -7,15 +7,13 @@
 class Madd;
 class Plane : public GameObject{
     public:
-        Plane(Madd* context);
+        Plane();
         ~Plane();
-        Madd* GetContext(){return context;};
         bool Render();
         bool Update();
         bool ReloadShaders();
     private:
         RenderedObject* planeMesh;
-        Madd* context;
 };
 
 #endif //CUBE_H

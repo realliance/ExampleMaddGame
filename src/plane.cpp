@@ -3,7 +3,7 @@
 #include "plane.h"
 #include "madd.h"
 #include "eventhandler.h"
-Plane::Plane(Madd* context):context(context){
+Plane::Plane() {
     float tileScale = 64.0f;
     float planeSize = 25.0f;
     std::vector<float> vertices = {

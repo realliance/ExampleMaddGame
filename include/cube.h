@@ -7,9 +7,8 @@
 class Madd;
 class Cube : public GameObject{
     public:
-        Cube(Madd* context);
+        Cube();
         ~Cube();
-        Madd* GetContext(){return context;};
         bool Render();
         bool Update();
         bool ReloadShaders();
@@ -17,7 +16,6 @@ class Cube : public GameObject{
         RenderedObject* cubeMesh;
         std::vector<glm::vec3> cubePositions;
 		int textures[2];
-        Madd* context;
 };
 
 #endif //CUBE_H

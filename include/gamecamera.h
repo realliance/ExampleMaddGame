@@ -7,9 +7,8 @@ class Camera;
 class Madd;
 class GameCamera : public GameObject{
     public:
-        GameCamera(Madd* context);
+        GameCamera();
         ~GameCamera();
-        Madd* GetContext(){return context;};
         bool Render();
         bool Update();
         bool ReloadShaders();
@@ -17,7 +16,6 @@ class GameCamera : public GameObject{
     private:
         Camera* cameraObj;
         RenderedObject* cubeMesh;
-        Madd* context;
         glm::vec3 position;
 };
 
