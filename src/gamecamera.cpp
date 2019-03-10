@@ -3,14 +3,15 @@
 #include "madd.h"
 #include "assets/freecam.h"
 #include "eventhandler.h"
-GameCamera::GameCamera(Madd* context):context(context){
-    cameraObj = new FreeCam(context);
-    context->SetMainCamera(cameraObj); 
+
+GameCamera::GameCamera() {
+    cameraObj = new FreeCam();
+    Madd::GetInstance().SetMainCamera(cameraObj); 
 }
 
 GameCamera::~GameCamera(){
    delete cameraObj;
-   context->SetMainCamera(NULL);
+   Madd::GetInstance().SetMainCamera(nullptr);
 }
 
 bool GameCamera::Update(){

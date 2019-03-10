@@ -3,7 +3,7 @@
 #include "cube.h"
 #include "madd.h"
 #include "eventhandler.h"
-Cube::Cube(Madd* context):context(context){
+Cube::Cube() {
     std::vector<float> vertices = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
          0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -75,7 +75,7 @@ bool Cube::Render(){
 		cubeMesh->SetTexture(textures[i % 2]);
         glm::mat4 model = glm::mat4(1.0f);
         model = glm::translate(model, pos+offset);
-        float angle = context->GetTime()/10.f + glm::radians(i*20.0f);
+        float angle = Madd::GetInstance().GetTime()/10.f + glm::radians(i*20.0f);
         glm::vec3 axis = glm::vec3(1.0f, 0.3f, 0.5f);
         model = glm::rotate(model, angle, axis);
         cubeMesh->SetTransformation(model);
@@ -94,6 +94,6 @@ bool Cube::ReloadShaders(){
 
 bool Cube::Update(){
     //glm::mat4 trans = cubeMesh->GetTransformation();
-    //cubeMesh->SetTransformation(glm::rotate(trans, glm::clamp(context->GetTime(), -1.f, 1.f)/100.f, glm::vec3(1.0, -1.0, 1.0)));
+    //cubeMesh->SetTransformation(glm::rotate(trans, glm::clamp(Madd::GetInstance().GetTime(), -1.f, 1.f)/100.f, glm::vec3(1.0, -1.0, 1.0)));
     return true;
 }
