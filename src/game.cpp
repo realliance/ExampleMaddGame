@@ -6,21 +6,17 @@
 
 Game::Game(){
     const char *title = "test";
-    Engine = new Madd(800, 600, title);
-    GameObject* cube = new Cube(Engine);
-    GameObject* plane = new Plane(Engine);
-    GameObject* gameCamera = new GameCamera(Engine);
-    Engine->AddObject(gameCamera);
-    Engine->AddObject(cube);
-    Engine->AddObject(plane);    
-}
-
-Game::~Game(){
-    delete Engine;
+    Madd::GetInstance().Init(800, 600, title);
+    GameObject* cube = new Cube();
+    GameObject* plane = new Plane();
+    GameObject* gameCamera = new GameCamera();
+    Madd::GetInstance().AddObject(gameCamera);
+    Madd::GetInstance().AddObject(cube);
+    Madd::GetInstance().AddObject(plane);    
 }
 
 void Game::Run(){
-    while(Engine->StayOpen()){
-        Engine->Tick();
+    while(Madd::GetInstance().StayOpen()){
+        Madd::GetInstance().Tick();
     }
 }
