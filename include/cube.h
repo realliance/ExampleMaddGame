@@ -1,7 +1,7 @@
 #ifndef CUBE_H
 #define CUBE_H
 #include "gameobject.h"
-#include "renderedobject.h"
+#include <graphics/renderedobject.h>
 #include <vector>
 #include <glm/glm.hpp>
 class Madd;

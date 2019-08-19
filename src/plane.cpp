@@ -1,8 +1,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "plane.h"
-#include "madd.h"
-#include "eventhandler.h"
+#include <madd.h>
+#include <event/eventhandler.h>
 Plane::Plane() {
     float tileScale = 64.0f;
     float planeSize = 25.0f;
@@ -15,7 +15,8 @@ Plane::Plane() {
         planeSize, 0.0f,  planeSize, tileScale, tileScale,
     };
     planeMesh = new RenderedObject(this);
-    planeMesh->RenderInit(vertices,"default.vs","default.fs","base.png");
+    planeMesh->RenderInit(vertices,"default.vs","default.fs");
+    planeMesh->AddTexture("base.png");
 }
 
 Plane::~Plane(){

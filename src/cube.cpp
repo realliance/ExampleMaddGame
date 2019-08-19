@@ -1,8 +1,8 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "cube.h"
-#include "madd.h"
-#include "eventhandler.h"
+#include <madd.h>
+#include <event/eventhandler.h>
 Cube::Cube() {
     std::vector<float> vertices = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -48,7 +48,7 @@ Cube::Cube() {
         -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
     };
     cubePositions = {
-        glm::vec3( 0.0f,  0.0f,  0.0f), 
+        glm::vec3( 0.0f,  0.0f,  0.0f),
         glm::vec3( 2.0f,  5.0f, -1.0f), 
         glm::vec3(-1.5f, -2.2f, -2.5f),  
         glm::vec3(-3.8f, -2.0f, -2.3f),  
@@ -57,10 +57,12 @@ Cube::Cube() {
         glm::vec3( 1.3f, -2.0f, -2.5f),  
         glm::vec3( 1.5f,  2.0f, -2.5f), 
         glm::vec3( 1.5f,  0.2f, -1.5f), 
-        glm::vec3(-1.3f,  1.0f, -1.5f)  
+        glm::vec3(-1.3f,  1.0f, -1.5f),
+        glm::vec3( 1.0f,  0.0f,  1.0f)
     };
     cubeMesh = new RenderedObject(this);
-    textures[0]=cubeMesh->RenderInit(vertices,"default.vs","default.fs","container.jpg");
+    cubeMesh->RenderInit(vertices,"default.vs","default.fs");
+    textures[0]=cubeMesh->AddTexture("container.jpg");
 	textures[1]=cubeMesh->AddTexture("logo.png");
 }
 

@@ -1,6 +1,6 @@
 #ifndef GAME_H
 #define GAME_H
-#include "madd.h"
+#include <madd.h>
 
 class Game{
     public:

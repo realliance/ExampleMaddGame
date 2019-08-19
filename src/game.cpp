@@ -3,6 +3,7 @@
 #include "cube.h"
 #include "plane.h"
 #include "gamecamera.h"
+#include <graphics/shaderprogram.h>
 
 Game::Game(){
     const char *title = "test";
@@ -12,7 +13,7 @@ Game::Game(){
     GameObject* gameCamera = new GameCamera();
     Madd::GetInstance().AddObject(gameCamera);
     Madd::GetInstance().AddObject(cube);
-    Madd::GetInstance().AddObject(plane);    
+    Madd::GetInstance().AddObject(plane);
 }
 
 void Game::Run(){

@@ -1,8 +1,8 @@
 #include <glm/gtc/matrix_transform.hpp>
-#include "gamecamera.h"
-#include "madd.h"
-#include "assets/freecam.h"
-#include "eventhandler.h"
+#include <gamecamera.h>
+#include <madd.h>
+#include <assets/freecam.h>
+#include <event/eventhandler.h>
 
 GameCamera::GameCamera() {
     cameraObj = new FreeCam();

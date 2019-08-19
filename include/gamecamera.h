@@ -1,7 +1,7 @@
 #ifndef GAMECAMERA_H
 #define GAMECAMERA_H
-#include "gameobject.h"
-#include "renderedobject.h"
+#include <gameobject.h>
+#include <graphics/renderedobject.h>
 #include <glm/glm.hpp>
 class Camera;
 class Madd;
