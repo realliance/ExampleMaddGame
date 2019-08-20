@@ -3,6 +3,10 @@
 #include "cube.h"
 #include <madd.h>
 #include <event/eventhandler.h>
+#include <physics/collider.h>
+#include <algorithm>
+#include <iostream>
+#include <glm/gtx/string_cast.hpp>
 Cube::Cube() {
     std::vector<float> vertices = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -58,7 +62,7 @@ Cube::Cube() {
         glm::vec3( 1.5f,  2.0f, -2.5f), 
         glm::vec3( 1.5f,  0.2f, -1.5f), 
         glm::vec3(-1.3f,  1.0f, -1.5f),
-        glm::vec3( 1.0f,  0.0f,  1.0f)
+        glm::vec3( 0.0f,  0.0f,  1.4f)
     };
     cubeMesh = new RenderedObject(this);
     cubeMesh->RenderInit(vertices,"default.vs","default.fs");
@@ -70,20 +74,55 @@ Cube::~Cube(){
     delete cubeMesh;
 }
 
-bool Cube::Render(){
-    int i = 0;
+glm::mat4 getModel(int i, const glm::vec3& pos){
+    glm::mat4 model = glm::mat4(1.0f);
     glm::vec3 offset = glm::vec3(3.0f,3.0f,3.0f);
-    for(auto const pos : cubePositions){
+    model = glm::translate(model, pos+offset);//+glm::vec3(glm::sin(Madd::GetInstance().GetTime()+i*20.f)/10.f,0.f,0.f));
+    float angle = Madd::GetInstance().GetTime()/10.f + glm::radians(i*20.0f);
+    glm::vec3 axis = glm::vec3(1.0f, 0.3f, 0.5f);
+    model = glm::rotate(model, angle, axis);
+    return model;
+}
+
+bool Cube::Render(){
+    std::vector<glm::vec3> collisionMesh = {
+        glm::vec3( 0.5f,  0.5f,  0.5f),
+        glm::vec3( 0.5f,  0.5f, -0.5f),
+        glm::vec3( 0.5f, -0.5f,  0.5f),
+        glm::vec3( 0.5f, -0.5f, -0.5f),
+        glm::vec3(-0.5f,  0.5f,  0.5f),
+        glm::vec3(-0.5f,  0.5f, -0.5f),
+        glm::vec3(-0.5f, -0.5f,  0.5f),
+        glm::vec3(-0.5f, -0.5f, -0.5f)
+    };
+    Collider a(collisionMesh);
+    std::cout << "a model: " << glm::to_string(getModel(cubePositions.size()-1,cubePositions.back())) << std::endl;
+    std::cout << "b model: " << glm::to_string(getModel(0,cubePositions.front())) << std::endl;
+    a.updateModel(getModel(cubePositions.size()-1,cubePositions.back()));
+    Collider b(collisionMesh);
+    b.updateModel(getModel(0,cubePositions.front()));
+    bool collides = b.Collides(a);
+    std::cout << "a: \n";
+    for_each(begin(a.getCollisionMesh()),end(a.getCollisionMesh()),[](const glm::vec3& v){
+        std::cout << glm::to_string(v) << ", " << std::endl;
+    });
+    std::cout << "b: \n";
+    for_each(begin(b.getCollisionMesh()),end(b.getCollisionMesh()),[](const glm::vec3& v){
+        std::cout << glm::to_string(v) << ", " << std::endl;
+    });
+    std::cout << collides << std::endl;
+    // Madd::GetInstance().Close();
+    for(int i = 0; i < cubePositions.size(); i++){
 		cubeMesh->SetTexture(textures[i % 2]);
-        glm::mat4 model = glm::mat4(1.0f);
-        model = glm::translate(model, pos+offset);
-        float angle = Madd::GetInstance().GetTime()/10.f + glm::radians(i*20.0f);
-        glm::vec3 axis = glm::vec3(1.0f, 0.3f, 0.5f);
-        model = glm::rotate(model, angle, axis);
+        glm::mat4 model = getModel(i,cubePositions[i]);
         cubeMesh->SetTransformation(model);
+        if( collides && (i == 0 || i == cubePositions.size()-1)){
+            cubeMesh->SetShade({1.0f,0.75f,0.5f,1.0f});
+        }else{
+            cubeMesh->SetShade(glm::vec4(1.0f));
+        }
         if(!cubeMesh->Render())
             return false;
-        i++;
     }
     cubeMesh->SetTransformation(glm::mat4(1.0f));
     return true;
