@@ -96,22 +96,11 @@ bool Cube::Render(){
         glm::vec3(-0.5f, -0.5f, -0.5f)
     };
     Collider a(collisionMesh);
-    std::cout << "a model: " << glm::to_string(getModel(cubePositions.size()-1,cubePositions.back())) << std::endl;
-    std::cout << "b model: " << glm::to_string(getModel(0,cubePositions.front())) << std::endl;
     a.updateModel(getModel(cubePositions.size()-1,cubePositions.back()));
     Collider b(collisionMesh);
     b.updateModel(getModel(0,cubePositions.front()));
     bool collides = b.Collides(a);
-    std::cout << "a: \n";
-    for_each(begin(a.getCollisionMesh()),end(a.getCollisionMesh()),[](const glm::vec3& v){
-        std::cout << glm::to_string(v) << ", " << std::endl;
-    });
-    std::cout << "b: \n";
-    for_each(begin(b.getCollisionMesh()),end(b.getCollisionMesh()),[](const glm::vec3& v){
-        std::cout << glm::to_string(v) << ", " << std::endl;
-    });
-    std::cout << collides << std::endl;
-    // Madd::GetInstance().Close();
+    
     for(int i = 0; i < cubePositions.size(); i++){
 		cubeMesh->SetTexture(textures[i % 2]);
         glm::mat4 model = getModel(i,cubePositions[i]);
