@@ -1,22 +1,26 @@
 #ifndef GAMECAMERA_H
 #define GAMECAMERA_H
 #include <gameobject.h>
-#include <graphics/renderedobject.h>
+#include <rendering/renderedobject.h>
 #include <glm/glm.hpp>
-class Camera;
+#include <assets/freecamcomponent.h>
+#include <components/keyboardeventcomponent.h>
+#include <components/mouseeventcomponent.h>
 class Madd;
 class GameCamera : public GameObject{
-    public:
-        GameCamera();
-        ~GameCamera();
-        bool Render();
-        bool Update();
-        bool ReloadShaders();
-        void ProcessInput(int key, int action);
-    private:
-        Camera* cameraObj;
-        RenderedObject* cubeMesh;
-        glm::vec3 position;
+public:
+  GameCamera();
+  ~GameCamera();
+  bool Render();
+  bool Update();
+  bool ReloadShaders();
+  void ProcessInput(int key, int action);
+private:
+  KeyboardEventComponent mouselockEvent;
+  MouseEventComponent mouseMovementEvent;
+  FreecamComponent cameraObj;
+  RenderedObject* cubeMesh;
+  glm::vec3 position;
 };
 
 #endif //GAMECAMERA_H

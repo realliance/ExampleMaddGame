@@ -3,6 +3,7 @@
 #include "plane.h"
 #include <madd.h>
 #include <event/eventhandler.h>
+#include <rendering/renderedobject.h>
 Plane::Plane() {
     float tileScale = 64.0f;
     float planeSize = 25.0f;
@@ -14,26 +15,25 @@ Plane::Plane() {
        -planeSize, 0.0f, -planeSize, 0.0f,      0.0f,
         planeSize, 0.0f,  planeSize, tileScale, tileScale,
     };
-    planeMesh = new RenderedObject(this);
-    planeMesh->RenderInit(vertices,"default.vs","default.fs");
-    planeMesh->AddTexture("base.png");
+    planeMesh = RenderedObject::Construct(vertices,"default.vs","default.fs");
+    RenderedObject::AddTexture(planeMesh, "base.png");
 }
 
 Plane::~Plane(){
-    delete planeMesh;
+    RenderedObject::Destruct(planeMesh);
 }
 
 bool Plane::Render(){
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model, glm::vec3(0.0f,-1.0f,0.0f));
-    planeMesh->SetTransformation(model);
-    if(!planeMesh->Render())
+    RenderedObject::SetTransformation(planeMesh,model);
+    if(!RenderedObject::Render(planeMesh))
         return false;
     return true;
 }
 
 bool Plane::ReloadShaders(){
-	planeMesh->LoadShader();
+	RenderedObject::ReloadShader(planeMesh);
 	return true;
 }
 

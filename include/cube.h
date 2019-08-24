@@ -1,7 +1,8 @@
 #ifndef CUBE_H
 #define CUBE_H
 #include "gameobject.h"
-#include <graphics/renderedobject.h>
+#include <components/renderedcomponent.h>
+#include <components/meshcollidercomponent.h>
 #include <vector>
 #include <glm/glm.hpp>
 class Madd;
@@ -13,7 +14,9 @@ class Cube : public GameObject{
         bool Update();
         bool ReloadShaders();
     private:
-        RenderedObject* cubeMesh;
+        RenderedComponent cubeMesh;
+        MeshColliderComponent colliderA;
+        MeshColliderComponent colliderB;
         std::vector<glm::vec3> cubePositions;
 		int textures[2];
 };

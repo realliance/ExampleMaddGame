@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <iostream>
 #include <glm/gtx/string_cast.hpp>
+#include <rendering/renderedobject.h>
 Cube::Cube() {
     std::vector<float> vertices = {
         -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
@@ -64,14 +65,26 @@ Cube::Cube() {
         glm::vec3(-1.3f,  1.0f, -1.5f),
         glm::vec3( 0.0f,  0.0f,  1.4f)
     };
-    cubeMesh = new RenderedObject(this);
-    cubeMesh->RenderInit(vertices,"default.vs","default.fs");
-    textures[0]=cubeMesh->AddTexture("container.jpg");
-	textures[1]=cubeMesh->AddTexture("logo.png");
+    std::vector<glm::vec3> collisionMesh = {
+        glm::vec3( 0.5f,  0.5f,  0.5f),
+        glm::vec3( 0.5f,  0.5f, -0.5f),
+        glm::vec3( 0.5f, -0.5f,  0.5f),
+        glm::vec3( 0.5f, -0.5f, -0.5f),
+        glm::vec3(-0.5f,  0.5f,  0.5f),
+        glm::vec3(-0.5f,  0.5f, -0.5f),
+        glm::vec3(-0.5f, -0.5f,  0.5f),
+        glm::vec3(-0.5f, -0.5f, -0.5f)
+    };
+    cubeMesh = RenderedObject::Construct(vertices,"default.vs","default.fs");
+    textures[0] = RenderedObject::AddTexture(cubeMesh, "container.jpg");
+	textures[1] = RenderedObject::AddTexture(cubeMesh, "logo.png");
+    colliderA = MeshColliderComponent{};
+    colliderA.mesh = collisionMesh;
+    colliderB = colliderA;
 }
 
 Cube::~Cube(){
-    delete cubeMesh;
+    RenderedObject::Destruct(cubeMesh);
 }
 
 glm::mat4 getModel(int i, const glm::vec3& pos){
@@ -85,40 +98,28 @@ glm::mat4 getModel(int i, const glm::vec3& pos){
 }
 
 bool Cube::Render(){
-    std::vector<glm::vec3> collisionMesh = {
-        glm::vec3( 0.5f,  0.5f,  0.5f),
-        glm::vec3( 0.5f,  0.5f, -0.5f),
-        glm::vec3( 0.5f, -0.5f,  0.5f),
-        glm::vec3( 0.5f, -0.5f, -0.5f),
-        glm::vec3(-0.5f,  0.5f,  0.5f),
-        glm::vec3(-0.5f,  0.5f, -0.5f),
-        glm::vec3(-0.5f, -0.5f,  0.5f),
-        glm::vec3(-0.5f, -0.5f, -0.5f)
-    };
-    Collider a(collisionMesh);
-    a.updateModel(getModel(cubePositions.size()-1,cubePositions.back()));
-    Collider b(collisionMesh);
-    b.updateModel(getModel(0,cubePositions.front()));
-    bool collides = b.Collides(a);
+    colliderA.model = getModel(cubePositions.size()-1,cubePositions.back());
+    colliderB.model = getModel(0,cubePositions.front());
+    bool collides = Collider::Collides(colliderA,colliderB);
     
     for(int i = 0; i < cubePositions.size(); i++){
-		cubeMesh->SetTexture(textures[i % 2]);
+		RenderedObject::SetTexture(cubeMesh, textures[i % 2]);
         glm::mat4 model = getModel(i,cubePositions[i]);
-        cubeMesh->SetTransformation(model);
+        RenderedObject::SetTransformation(cubeMesh, model);
         if( collides && (i == 0 || i == cubePositions.size()-1)){
-            cubeMesh->SetShade({1.0f,0.75f,0.5f,1.0f});
+            RenderedObject::SetShade(cubeMesh, {1.0f,0.75f,0.5f,1.0f});
         }else{
-            cubeMesh->SetShade(glm::vec4(1.0f));
+            RenderedObject::SetShade(cubeMesh, glm::vec4(1.0f));
         }
-        if(!cubeMesh->Render())
+        if(!RenderedObject::Render(cubeMesh))
             return false;
     }
-    cubeMesh->SetTransformation(glm::mat4(1.0f));
+    RenderedObject::SetTransformation(cubeMesh, glm::mat4(1.0f));
     return true;
 }
 
 bool Cube::ReloadShaders(){
-	cubeMesh->LoadShader();
+	RenderedObject::ReloadShader(cubeMesh);
 	return true;
 }
 

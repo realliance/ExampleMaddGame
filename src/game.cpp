@@ -3,7 +3,7 @@
 #include "cube.h"
 #include "plane.h"
 #include "gamecamera.h"
-#include <graphics/shaderprogram.h>
+#include <rendering/shaderprogram.h>
 
 Game::Game(){
     const char *title = "test";

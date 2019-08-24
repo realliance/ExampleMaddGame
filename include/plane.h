@@ -1,7 +1,7 @@
 #ifndef PLANE_H
 #define PLANE_H
 #include "gameobject.h"
-#include "graphics/renderedobject.h"
+#include <components/renderedcomponent.h>
 #include <vector>
 #include <glm/glm.hpp>
 class Madd;
@@ -13,7 +13,7 @@ class Plane : public GameObject{
         bool Update();
         bool ReloadShaders();
     private:
-        RenderedObject* planeMesh;
+        RenderedComponent planeMesh;
 };
 
 #endif //CUBE_H
