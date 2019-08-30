@@ -1,12 +1,10 @@
-#ifndef CUBE_H
-#define CUBE_H
-#include "gameobject.h"
+#pragma once
 #include <components/renderedcomponent.h>
 #include <components/meshcollidercomponent.h>
 #include <vector>
 #include <glm/glm.hpp>
 class Madd;
-class Cube : public GameObject{
+class Cube{
     public:
         Cube();
         ~Cube();
@@ -21,4 +19,3 @@ class Cube : public GameObject{
 		int textures[2];
 };
 
-#endif //CUBE_H

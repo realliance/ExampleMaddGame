@@ -1,11 +1,9 @@
-#ifndef PLANE_H
-#define PLANE_H
-#include "gameobject.h"
+#pragma once
 #include <components/renderedcomponent.h>
 #include <vector>
 #include <glm/glm.hpp>
 class Madd;
-class Plane : public GameObject{
+class Plane{
     public:
         Plane();
         ~Plane();
@@ -16,4 +14,3 @@ class Plane : public GameObject{
         RenderedComponent planeMesh;
 };
 
-#endif //CUBE_H

@@ -2,7 +2,6 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "cube.h"
 #include <madd.h>
-#include <event/eventhandler.h>
 #include <physics/collider.h>
 #include <algorithm>
 #include <iostream>
