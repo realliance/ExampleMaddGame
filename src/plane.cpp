@@ -17,6 +17,10 @@ Plane::Plane() {
     };
     planeMesh = RenderedObject::Construct(vertices,"default.vs","default.fs");
     RenderedObject::AddTexture(planeMesh, "base.png");
+    // planeMesh.model = glm::translate(planeMesh.model, glm::vec3(0.0f,-1.0f,0.0f));
+    RenderedObject::SetTransformation(planeMesh, glm::translate(planeMesh.model, glm::vec3(0.0f,-1.0f,0.0f)));
+    Madd::GetInstance().GetSystem("RenderSystem")->Register(&planeMesh);
+
 }
 
 Plane::~Plane(){

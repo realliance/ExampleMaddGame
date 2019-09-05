@@ -80,6 +80,7 @@ Cube::Cube() {
     colliderA = MeshColliderComponent{};
     colliderA.mesh = collisionMesh;
     colliderB = colliderA;
+    Madd::GetInstance().GetSystem("RenderSystem")->Register(&cubeMesh);
 }
 
 Cube::~Cube(){

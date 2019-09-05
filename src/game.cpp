@@ -5,22 +5,21 @@
 #include <rendering/shaderprogram.h>
 #include <event/keyboardeventsystem.h>
 #include <event/mouseeventsystem.h>
+#include <rendering/rendersystem.h>
 #include <camerasystem.h>
 #include <assets/freecamsystem.h>
 
 Game::Game(){
     const char *title = "test";
     Madd::GetInstance().Init(800, 600, title);
+    Madd::GetInstance().Register(&RenderSystem::GetInstance());
     Madd::GetInstance().Register(&MouseEventSystem::GetInstance());
     Madd::GetInstance().Register(&KeyboardEventSystem::GetInstance());
     Madd::GetInstance().Register(new CameraSystem);
     Madd::GetInstance().Register(new FreeCamSystem);
+    GameCamera* gameCamera = new GameCamera();
     Cube* cube = new Cube();
     Plane* plane = new Plane();
-    GameCamera* gameCamera = new GameCamera();
-    // Madd::GetInstance().AddObject(gameCamera);
-    // Madd::GetInstance().AddObject(cube);
-    // Madd::GetInstance().AddObject(plane);
 }
 
 void Game::Run(){
