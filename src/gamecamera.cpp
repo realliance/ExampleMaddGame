@@ -2,6 +2,7 @@
 #include <gamecamera.h>
 #include <madd.h>
 #include <assets/freecamsystem.h>
+#include <components/windowcomponent.h>
 #include <keyboardeventsystem.h>
 #include <mouseeventsystem.h>
 #include <keycodes.h>
@@ -12,15 +13,15 @@ GameCamera::GameCamera() {
 
   mouseMovementEvent = MouseEventComponent{};
   mouseMovementEvent.c = &camera;
-  mouseMovementEvent.callback = [](Component* c, float posX, float posY){
+  mouseMovementEvent.callback = [](Component* c, WindowComponent* window, float posX, float posY){
     dynamic_cast<FreecamComponent*>(c)->cursor = glm::vec2(posX,posY);
   };
   MouseEventSystem::GetInstance().Register(&mouseMovementEvent);
 
   mouselockEvent = KeyboardEventComponent{};
   mouselockEvent.c = &camera;
-  mouselockEvent.callback = [](Component* c, int key, int action){
-    FreeCamSystem::ToggleMouseLock(*dynamic_cast<FreecamComponent*>(c), key, action);
+  mouselockEvent.callback = [](Component* c, WindowComponent* window, int key, int action){
+    FreeCamSystem::ToggleMouseLock(*dynamic_cast<FreecamComponent*>(c), window, key, action);
   };
   mouselockEvent.code = KEY_TAB;
   KeyboardEventSystem::GetInstance().Register(&mouselockEvent);
@@ -35,7 +36,7 @@ GameCamera::GameCamera() {
   Madd::GetInstance().GetSystem("FreeCamSystem")->Register(&camera);
 }
 
-void GameCamera::HandleEvent(Component* _c, int key, int action){
+void GameCamera::HandleEvent(Component* _c, WindowComponent* window, int key, int action){
   FreecamComponent* c = dynamic_cast<FreecamComponent*>(_c);
   switch (action){
   case KEY_PRESS:

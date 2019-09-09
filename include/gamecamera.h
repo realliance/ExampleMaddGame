@@ -8,11 +8,12 @@ class GameCamera{
 public:
   GameCamera();
   ~GameCamera();
-  static void HandleEvent(Component* c, int key, int action);
+  static void HandleEvent(Component* c, WindowComponent* window, int key, int action);
+  FreecamComponent camera;
 private:
   KeyboardEventComponent mouselockEvent;
   MouseEventComponent mouseMovementEvent;
   KeyboardEventComponent keyboardMovementEvent[6];
-  FreecamComponent camera;
+  
 };
 
