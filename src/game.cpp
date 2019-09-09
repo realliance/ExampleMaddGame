@@ -2,12 +2,12 @@
 #include "cube.h"
 #include "plane.h"
 #include "gamecamera.h"
-#include <rendering/shadersystem.h>
-#include <event/keyboardeventsystem.h>
-#include <event/mouseeventsystem.h>
-#include <rendering/rendersystem.h>
-#include <rendering/texturesystem.h>
-#include <rendering/meshsystem.h>
+#include <shadersystem.h>
+#include <keyboardeventsystem.h>
+#include <mouseeventsystem.h>
+#include <rendersystem.h>
+#include <texturesystem.h>
+#include <meshsystem.h>
 #include <camerasystem.h>
 #include <assets/freecamsystem.h>
 

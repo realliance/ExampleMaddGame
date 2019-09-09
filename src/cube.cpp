@@ -2,11 +2,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "cube.h"
 #include <madd.h>
-#include <physics/collider.h>
+#include <collider.h>
 #include <algorithm>
 #include <iostream>
 #include <glm/gtx/string_cast.hpp>
-#include <rendering/texturesystem.h>
+#include <texturesystem.h>
 
 glm::mat4 getModel(int i, const glm::vec3& pos){
   glm::mat4 model = glm::mat4(1.0f);
@@ -124,25 +124,3 @@ Cube::~Cube(){
   Madd::GetInstance().GetSystem("MeshSystem")->Unregister(&mesh);
 }
 
-
-
-// bool Cube::Render(){
-//     colliderA.model = getModel(cubePositions.size()-1,cubePositions.back());
-//     colliderB.model = getModel(0,cubePositions.front());
-//     bool collides = Collider::Collides(colliderA,colliderB);
-  
-//     for(int i = 0; i < cubePositions.size(); i++){
-// 		cubeMesh.textureN= i % 2;
-//         glm::mat4 model = getModel(i,cubePositions[i]);
-//         RenderedObject::SetTransformation(cubeMesh, model);
-//         if( collides && (i == 0 || i == cubePositions.size()-1)){
-//             RenderedObject::SetShade(cubeMesh, {1.0f,0.75f,0.5f,1.0f});
-//         }else{
-//             RenderedObject::SetShade(cubeMesh, glm::vec4(1.0f));
-//         }
-//         if(!RenderedObject::Render(cubeMesh))
-//             return false;
-//     }
-//     RenderedObject::SetTransformation(cubeMesh, glm::mat4(1.0f));
-//     return true;
-// }

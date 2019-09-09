@@ -2,8 +2,8 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "plane.h"
 #include <madd.h>
-#include <event/keycodes.h>
-#include <rendering/texturesystem.h>
+#include <keycodes.h>
+#include <texturesystem.h>
 Plane::Plane() {
     float tileScale = 64.0f;
     float planeSize = 25.0f;

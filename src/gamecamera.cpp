@@ -2,9 +2,9 @@
 #include <gamecamera.h>
 #include <madd.h>
 #include <assets/freecamsystem.h>
-#include <event/keyboardeventsystem.h>
-#include <event/mouseeventsystem.h>
-#include <event/keycodes.h>
+#include <keyboardeventsystem.h>
+#include <mouseeventsystem.h>
+#include <keycodes.h>
 
 GameCamera::GameCamera() {
   camera = FreeCamSystem::Construct();
