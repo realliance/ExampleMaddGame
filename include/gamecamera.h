@@ -1,5 +1,4 @@
 #pragma once
-#include <rendering/renderedobject.h>
 #include <glm/glm.hpp>
 #include <assets/freecamcomponent.h>
 #include <components/keyboardeventcomponent.h>
