@@ -6,10 +6,13 @@
 
 #include <components/windowcomponent.h>
 
+#include <iostream>
+#include <glm/gtx/string_cast.hpp>
+
 int main(){
   Madd::GetInstance().Init();
   
-  Madd::GetInstance().Register(new WindowSystem);
+  Madd::GetInstance().Register(new GlfwSystem);
 
   Madd::GetInstance().Register(&RenderSystem::GetInstance());
   Madd::GetInstance().Register(new TextureSystem);
@@ -21,19 +24,21 @@ int main(){
   Madd::GetInstance().Register(&KeyboardEventSystem::GetInstance());
   Madd::GetInstance().Register(new CameraSystem);
   Madd::GetInstance().Register(new FreeCamSystem);
-  GameCamera* gameCamera = new GameCamera();
-  Cube* cube = new Cube();
-  Plane* plane = new Plane();
 
-  // mainWindow.update = true;
   WindowComponent mainWindow{};
   mainWindow.height = 600;
   mainWindow.width = 800;
   mainWindow.title = "ExampleMaddGame";
+
+  Madd::GetInstance().GetSystem("GlfwSystem")->Register(&mainWindow);
+  dynamic_cast<GlfwSystem*>(Madd::GetInstance().GetSystem("GlfwSystem"))->Enable(mainWindow);
+  
+  GameCamera* gameCamera = new GameCamera();
+  Cube* cube = new Cube();
+  Plane* plane = new Plane();
+
   mainWindow.cameras.push_back(&gameCamera->camera.camera);
   mainWindow.update = true;
-
-  Madd::GetInstance().GetSystem("WindowSystem")->Register(&mainWindow);
 
   Madd::GetInstance().Run();
   Madd::GetInstance().Deinit();

@@ -7,7 +7,7 @@ class Madd;
 class GameCamera{
 public:
   GameCamera();
-  ~GameCamera();
+  void Unregister();
   static void HandleEvent(Component* c, WindowComponent* window, int key, int action);
   FreecamComponent camera;
 private:

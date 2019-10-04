@@ -19,49 +19,50 @@ glm::mat4 getModel(int i, const glm::vec3& pos){
 }
 
 Cube::Cube() {
-  std::vector<float> vertices = {
-      -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-      -0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+  std::vector<glm::vec3> verts = {
+    {-0.5f, -0.5f, -0.5f},
+    { 0.5f, -0.5f, -0.5f},
+    { 0.5f,  0.5f, -0.5f},
+    { 0.5f,  0.5f, -0.5f},
+    {-0.5f,  0.5f, -0.5f},
+    {-0.5f, -0.5f, -0.5f},
 
-      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-      -0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+    {-0.5f, -0.5f,  0.5f},
+    { 0.5f, -0.5f,  0.5f},
+    { 0.5f,  0.5f,  0.5f},
+    { 0.5f,  0.5f,  0.5f},
+    {-0.5f,  0.5f,  0.5f},
+    {-0.5f, -0.5f,  0.5f},
 
-      -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-      -0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-      -0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    {-0.5f,  0.5f,  0.5f},
+    {-0.5f,  0.5f, -0.5f},
+    {-0.5f, -0.5f, -0.5f},
+    {-0.5f, -0.5f, -0.5f},
+    {-0.5f, -0.5f,  0.5f},
+    {-0.5f,  0.5f,  0.5f},
 
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+    { 0.5f,  0.5f,  0.5f},
+    { 0.5f,  0.5f, -0.5f},
+    { 0.5f, -0.5f, -0.5f},
+    { 0.5f, -0.5f, -0.5f},
+    { 0.5f, -0.5f,  0.5f},
+    { 0.5f,  0.5f,  0.5f},
 
-      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-      -0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-      -0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+    {-0.5f, -0.5f, -0.5f},
+    { 0.5f, -0.5f, -0.5f},
+    { 0.5f, -0.5f,  0.5f},
+    { 0.5f, -0.5f,  0.5f},
+    {-0.5f, -0.5f,  0.5f},
+    {-0.5f, -0.5f, -0.5f},
 
-      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
-        0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-        0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
-      -0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
-      -0.5f,  0.5f, -0.5f,  0.0f, 1.0f
+    {-0.5f,  0.5f, -0.5f},
+    { 0.5f,  0.5f, -0.5f},
+    { 0.5f,  0.5f,  0.5f},
+    { 0.5f,  0.5f,  0.5f},
+    {-0.5f,  0.5f,  0.5f},
+    {-0.5f,  0.5f, -0.5f}
   };
+  
   cubePositions = {
       glm::vec3( 0.0f,  0.0f,  0.0f),
       glm::vec3( 2.0f,  5.0f, -1.0f), 
@@ -86,12 +87,57 @@ Cube::Cube() {
       glm::vec3(-0.5f, -0.5f, -0.5f)
   };
 
+  std::vector<glm::vec2> texcoords = {
+    {0.0f, 0.0f},
+    {1.0f, 0.0f},
+    {1.0f, 1.0f},
+    {1.0f, 1.0f},
+    {0.0f, 1.0f},
+    {0.0f, 0.0f},
+
+    {0.0f, 0.0f},
+    {1.0f, 0.0f},
+    {1.0f, 1.0f},
+    {1.0f, 1.0f},
+    {0.0f, 1.0f},
+    {0.0f, 0.0f},
+
+    {1.0f, 0.0f},
+    {1.0f, 1.0f},
+    {0.0f, 1.0f},
+    {0.0f, 1.0f},
+    {0.0f, 0.0f},
+    {1.0f, 0.0f},
+
+    {1.0f, 0.0f},
+    {1.0f, 1.0f},
+    {0.0f, 1.0f},
+    {0.0f, 1.0f},
+    {0.0f, 0.0f},
+    {1.0f, 0.0f},
+
+    {0.0f, 1.0f},
+    {1.0f, 1.0f},
+    {1.0f, 0.0f},
+    {1.0f, 0.0f},
+    {0.0f, 0.0f},
+    {0.0f, 1.0f},
+
+    {0.0f, 1.0f},
+    {1.0f, 1.0f},
+    {1.0f, 0.0f},
+    {1.0f, 0.0f},
+    {0.0f, 0.0f},
+    {0.0f, 1.0f}
+  };
+
   textures[0].filename = "container.jpg";
   textures[1].filename = "logo.png";
   Madd::GetInstance().GetSystem("TextureSystem")->Register(&textures[0]);
   Madd::GetInstance().GetSystem("TextureSystem")->Register(&textures[1]);
 
-  mesh.vertices = vertices;
+  mesh.verts = verts;
+  mesh.texcoords = texcoords;
   Madd::GetInstance().GetSystem("MeshSystem")->Register(&mesh);
 
   shader.fragmentShaderPath = "default.fs";
@@ -114,7 +160,7 @@ Cube::Cube() {
 
 }
 
-Cube::~Cube(){
+void Cube::Unregister(){
   for(int i = 0; i < 11; i++){
     Madd::GetInstance().GetSystem("RenderSystem")->Unregister(&cubes[i]);
   }

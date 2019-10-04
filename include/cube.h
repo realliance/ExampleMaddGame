@@ -9,7 +9,7 @@
 class Cube{
 public:
   Cube();
-  ~Cube();
+  void Unregister();
   bool Render();
   bool Update();
   bool ReloadShaders();

@@ -9,7 +9,7 @@ class Madd;
 class Plane{
 public:
   Plane();
-  ~Plane();
+  void Unregister();
   bool Render();
   bool Update();
   bool ReloadShaders();

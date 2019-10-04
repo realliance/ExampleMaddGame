@@ -75,7 +75,7 @@ void GameCamera::HandleEvent(Component* _c, WindowComponent* window, int key, in
   }
 }
 
-GameCamera::~GameCamera(){
+void GameCamera::Unregister(){
   MouseEventSystem::GetInstance().Unregister(&mouseMovementEvent);
   KeyboardEventSystem::GetInstance().Unregister(&mouselockEvent);
   for(int i = 0; i < 6; i++){
