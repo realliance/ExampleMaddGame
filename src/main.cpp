@@ -12,33 +12,40 @@
 int main(){
   Madd::GetInstance().Init();
   
-  Madd::GetInstance().Register(new GlfwSystem);
+  Madd::GetInstance().Register({
+    new GlfwSystem,&RenderSystem::GetInstance(),new TextureSystem,
+    new ShaderSystem, new MeshSystem, &MouseEventSystem::GetInstance(),
+    &KeyboardEventSystem::GetInstance(), new CameraSystem, 
+    new FreeCamSystem
+  });
 
-  Madd::GetInstance().Register(&RenderSystem::GetInstance());
-  Madd::GetInstance().Register(new TextureSystem);
-  Madd::GetInstance().Register(new ShaderSystem);
-  Madd::GetInstance().Register(new MeshSystem);
+  Madd::GetInstance().InitSystems();
 
 
-  Madd::GetInstance().Register(&MouseEventSystem::GetInstance());
-  Madd::GetInstance().Register(&KeyboardEventSystem::GetInstance());
-  Madd::GetInstance().Register(new CameraSystem);
-  Madd::GetInstance().Register(new FreeCamSystem);
-
+  GameCamera* gameCamera = new GameCamera();
   WindowComponent mainWindow{};
   mainWindow.height = 600;
   mainWindow.width = 800;
   mainWindow.title = "ExampleMaddGame";
-
+  mainWindow.cameras.push_back(&gameCamera->camera.camera);
   Madd::GetInstance().GetSystem("GlfwSystem")->Register(&mainWindow);
-  dynamic_cast<GlfwSystem*>(Madd::GetInstance().GetSystem("GlfwSystem"))->Enable(mainWindow);
-  
-  GameCamera* gameCamera = new GameCamera();
+
+
+  CameraComponent secondary = CameraSystem::Construct();
+  secondary.pos = {0.f,10.f,0.f};
+  secondary.up = {1.0f,0.f,0.f};
+  secondary.front = {0.0f,-1.f,0.f};
+  secondary.lookAt = {0.f,-1.f,0.f};
+  Madd::GetInstance().GetSystem("CameraSystem")->Register(&secondary);
+  WindowComponent secondwindow{};
+  secondwindow.height = 300;
+  secondwindow.width = 400;
+  secondwindow.title = "Second";
+  secondwindow.cameras.push_back(&secondary);
+  Madd::GetInstance().GetSystem("GlfwSystem")->Register(&secondwindow);
+
   Cube* cube = new Cube();
   Plane* plane = new Plane();
-
-  mainWindow.cameras.push_back(&gameCamera->camera.camera);
-  mainWindow.update = true;
 
   Madd::GetInstance().Run();
   Madd::GetInstance().Deinit();

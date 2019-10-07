@@ -9,7 +9,6 @@
 
 GameCamera::GameCamera() {
   camera = FreeCamSystem::Construct();
-  camera.camera.active = true;
 
   mouseMovementEvent = MouseEventComponent{};
   mouseMovementEvent.c = &camera;

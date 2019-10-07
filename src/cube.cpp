@@ -155,7 +155,7 @@ Cube::Cube() {
   }
 
   colliderA = MeshColliderComponent{};
-  colliderA.mesh = collisionMesh;
+  colliderA.mesh = &mesh;
   colliderB = colliderA;
 
 }
