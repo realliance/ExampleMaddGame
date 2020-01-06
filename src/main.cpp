@@ -1,8 +1,7 @@
-#include "cube.h"
-#include "plane.h"
 #include "gamecamera.h"
 #include "madd.h"
 #include "systems.h"
+#include "simplex.h"
 
 #include <components/windowcomponent.h>
 
@@ -16,7 +15,7 @@ int main(){
     new GlfwSystem,&RenderSystem::GetInstance(),new TextureSystem,
     new ShaderSystem, new MeshSystem, &MouseEventSystem::GetInstance(),
     &KeyboardEventSystem::GetInstance(), new CameraSystem, 
-    new FreeCamSystem
+    new FreeCamSystem, new BlockSystem
   });
 
   Madd::GetInstance().InitSystems();
@@ -24,34 +23,42 @@ int main(){
 
   GameCamera* gameCamera = new GameCamera();
   WindowComponent mainWindow{};
-  mainWindow.height = 600;
-  mainWindow.width = 800;
+  mainWindow.height = 9*64;
+  mainWindow.width = 16*64;
   mainWindow.title = "ExampleMaddGame";
   mainWindow.cameras.push_back(&gameCamera->camera.camera);
   Madd::GetInstance().GetSystem("GlfwSystem")->Register(&mainWindow);
+  gameCamera->camera.movementSpeed = 4.f;
 
+  {
+    glm::vec2 offsets[] = {{-1,0},{0,1},{1,0},{1,0},{0,-1},{0,-1},{-1,0},{-1,0}};
+    Simplex s = Simplex(32484092); //as chosen by dice roll;
+    gameCamera->camera.camera.pos.y = (s.Noise(0,0)*4)+4 - 1.f;
+    System* blockSys = Madd::GetInstance().GetSystem("BlockSystem");
+    for(int x = -24; x < 24; x++){
+      for(int z = -24; z < 24; z++){
+        double y = (s.Noise(x/16.,z/16.)*4)+4;
+        BlockComponent b = BlockComponent{glm::vec3(x,y,z)};
+        blockSys->Register(&b);
+        int lowest = y;
+        for(const auto & offset: offsets){
+          int by = floor(s.Noise((x+offset.x)/16.,(z+offset.y)/16.)*4)+4;
+          if(by < lowest){
+            lowest = by;
+          }
+        }
+        for(int sy = lowest; sy < y; sy++){
+          BlockComponent sb = BlockComponent{glm::vec3(x,sy,z)};
+          blockSys->Register(&sb);
+        }
+      }
+    }
 
-  CameraComponent secondary = CameraSystem::Construct();
-  secondary.pos = {0.f,10.f,0.f};
-  secondary.up = {1.0f,0.f,0.f};
-  secondary.front = {0.0f,-1.f,0.f};
-  secondary.lookAt = {0.f,-1.f,0.f};
-  Madd::GetInstance().GetSystem("CameraSystem")->Register(&secondary);
-  WindowComponent secondwindow{};
-  secondwindow.height = 300;
-  secondwindow.width = 400;
-  secondwindow.title = "Second";
-  secondwindow.cameras.push_back(&secondary);
-  Madd::GetInstance().GetSystem("GlfwSystem")->Register(&secondwindow);
-
-  Cube* cube = new Cube();
-  Plane* plane = new Plane();
+  }
 
   Madd::GetInstance().Run();
   Madd::GetInstance().Deinit();
   delete gameCamera;
-  delete cube;
-  delete plane;
 
   return 0;
 }

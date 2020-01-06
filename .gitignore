@@ -36,3 +36,5 @@
 /.vscode
 /build
 example
+callgrind.out.*
+*.svg

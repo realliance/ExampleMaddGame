@@ -9,3 +9,4 @@
 #include <camerasystem.h>
 #include <assets/freecamsystem.h>
 #include <glfwsystem.h>
+#include "blocksystem.h"
