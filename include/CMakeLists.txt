@@ -1,7 +1,6 @@
 set(DIR ${CMAKE_CURRENT_LIST_DIR})
 target_sources(example
     PRIVATE
-    "${DIR}/main.h"
     "${DIR}/gamecamera.h"
     "${DIR}/systems.h"
     "${DIR}/blocksystem.h"

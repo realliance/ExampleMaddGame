@@ -31,18 +31,23 @@ int main(){
   gameCamera->camera.movementSpeed = 4.f;
 
   {
-    glm::vec2 offsets[] = {{-1,0},{0,1},{1,0},{1,0},{0,-1},{0,-1},{-1,0},{-1,0}};
+    int size = 32;
+    float stretch = 64.f;
+    int magnitude = 8;
+
+    glm::vec2 offsets[] = {{-1,0},{1,0},{0,-1},{0,1}};
     Simplex s = Simplex(32484092); //as chosen by dice roll;
-    gameCamera->camera.camera.pos.y = (s.Noise(0,0)*4)+4 - 1.f;
+    gameCamera->camera.camera.pos.y = (s.Noise(0,0)*magnitude)+magnitude + 4.f;
     System* blockSys = Madd::GetInstance().GetSystem("BlockSystem");
-    for(int x = -24; x < 24; x++){
-      for(int z = -24; z < 24; z++){
-        double y = (s.Noise(x/16.,z/16.)*4)+4;
+//*
+    for(int x = -size; x < size; x++){
+      for(int z = -size; z < size; z++){
+        double y = (s.Noise(x/stretch,z/stretch)*magnitude)+magnitude;
         BlockComponent b = BlockComponent{glm::vec3(x,y,z)};
         blockSys->Register(&b);
         int lowest = y;
         for(const auto & offset: offsets){
-          int by = floor(s.Noise((x+offset.x)/16.,(z+offset.y)/16.)*4)+4;
+          int by = floor(s.Noise((x+offset.x)/stretch,(z+offset.y)/stretch)*magnitude)+magnitude;
           if(by < lowest){
             lowest = by;
           }
@@ -53,7 +58,7 @@ int main(){
         }
       }
     }
-
+//*/
   }
 
   Madd::GetInstance().Run();
