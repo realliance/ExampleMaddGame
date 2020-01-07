@@ -10,3 +10,4 @@
 #include <assets/freecamsystem.h>
 #include <glfwsystem.h>
 #include "blocksystem.h"
+#include <instancerendersystem.h>

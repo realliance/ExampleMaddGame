@@ -7,6 +7,7 @@ void BlockSystem::Init() {
   meshSys = dynamic_cast<MeshSystem*>(Madd::GetInstance().GetSystem("MeshSystem"));
   shaderSys = dynamic_cast<ShaderSystem*>(Madd::GetInstance().GetSystem("ShaderSystem"));
   renderSys = dynamic_cast<RenderSystem*>(Madd::GetInstance().GetSystem("RenderSystem"));
+  instancerenderSys = dynamic_cast<InstanceRenderSystem*>(Madd::GetInstance().GetSystem("InstanceRenderSystem"));
 
   const std::vector<glm::vec3> verts = {
     { 0.5f,  0.5f, -0.5f}, { 0.5f, -0.5f, -0.5f}, {-0.5f, -0.5f, -0.5f},
@@ -46,8 +47,8 @@ void BlockSystem::Init() {
   mesh.texcoords = texcoords;
   meshSys->Register(&mesh);
 
-  shader.fragmentShaderPath = "block.fs";
-  shader.vertexShaderPath = "block.vs";
+  shader.fragmentShaderPath = "instanceblock.fs";
+  shader.vertexShaderPath = "instanceblock.vs";
   shader.enableCulling = true;
   shaderSys->Register(&shader);
 
@@ -56,7 +57,7 @@ void BlockSystem::Init() {
 
 void BlockSystem::Deinit(){
   for(auto & [bref, binst] : binstance){
-    renderSys->Unregister(&binst.r);
+    instancerenderSys->Unregister(&binst.r);
   }
   blocks.clear();
   binstance.clear();
@@ -65,7 +66,7 @@ void BlockSystem::Deinit(){
   textureSys = nullptr;
   meshSys = nullptr;
   shaderSys = nullptr;
-  renderSys = nullptr;
+  instancerenderSys = nullptr;
 }
 
 bool BlockSystem::Register(Component* component){
@@ -89,7 +90,7 @@ bool BlockSystem::Register(Component* component){
   binstance[component->cID] = BlockInstance{};
   binstance[component->cID].r = r;
 
-  if(!renderSys->Register(&binstance[component->cID].r)){
+  if(!instancerenderSys->Register(&binstance[component->cID].r)){
     binstance.erase(component->cID);
     return false;
   }
@@ -105,7 +106,7 @@ bool BlockSystem::Register(Component* component){
 bool BlockSystem::Unregister(Component* component){
   for(auto i = begin(blocks); i != end(blocks); i++){
     if((*i)->cID == component->cID){
-      renderSys->Unregister(&binstance[component->cID].r);
+      instancerenderSys->Unregister(&binstance[component->cID].r);
       binstance.erase(component->cID);
       blocks.erase(i);
       positions.erase(dynamic_cast<BlockComponent*>(component)->position);

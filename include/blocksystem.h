@@ -13,6 +13,7 @@
 #include <meshsystem.h>
 #include <shadersystem.h>
 #include <rendersystem.h>
+#include <instancerendersystem.h>
 
 
 typedef ComponentID BlockReferenceID;
@@ -40,4 +41,5 @@ private:
   MeshSystem* meshSys;
   ShaderSystem* shaderSys;
   RenderSystem* renderSys;
+  InstanceRenderSystem* instancerenderSys;
 };

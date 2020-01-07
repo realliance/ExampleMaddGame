@@ -12,11 +12,13 @@ int main(){
   Madd::GetInstance().Init();
   
   Madd::GetInstance().Register({
-    new GlfwSystem,&RenderSystem::GetInstance(),new TextureSystem,
+    new GlfwSystem,&RenderSystem::GetInstance() ,new TextureSystem,
     new ShaderSystem, new MeshSystem, &MouseEventSystem::GetInstance(),
     &KeyboardEventSystem::GetInstance(), new CameraSystem, 
-    new FreeCamSystem, new BlockSystem
+    new FreeCamSystem, new BlockSystem, &InstanceRenderSystem::GetInstance()
   });
+
+  GlfwSystem::EnableDebuggingContext();
 
   Madd::GetInstance().InitSystems();
 
