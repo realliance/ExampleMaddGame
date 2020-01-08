@@ -5,7 +5,7 @@
 
 #include "system.h"
 #include "blockcomponent.h"
-#include <map>
+#include <unordered_map>
 #include <unordered_set>
 #include "glm/gtx/hash.hpp"
 
@@ -32,7 +32,7 @@ class BlockSystem : public System {
   std::vector<std::string> Requires() {return {"MeshSystem","TextureSystem", "ShaderSystem", "RenderSystem"};};
 private:
   std::vector<BlockComponent*> blocks;
-  std::map<BlockReferenceID,BlockInstance> binstance;
+  std::unordered_map<BlockReferenceID,BlockInstance> binstance;
   std::unordered_set<glm::vec3> positions;
   MeshComponent mesh;
   ShaderComponent shader;

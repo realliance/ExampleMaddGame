@@ -9,6 +9,7 @@
 #include <glm/gtx/string_cast.hpp>
 
 int main(){
+  
   Madd::GetInstance().Init();
   
   Madd::GetInstance().Register({
@@ -33,13 +34,13 @@ int main(){
   gameCamera->camera.movementSpeed = 4.f;
 
   {
-    int size = 64;
+    int size = 512;
     float stretch = 64.f;
     int magnitude = 16;
 
     glm::vec2 offsets[] = {{-1,0},{1,0},{0,-1},{0,1}};
-    Simplex s = Simplex(32484092); //as chosen by dice roll;
-    gameCamera->camera.camera.pos.y = (s.Noise(0,0)*magnitude)+magnitude;
+    Simplex s = Simplex(8); //as chosen by dice roll;
+    gameCamera->camera.camera.pos.y = (s.Noise(0,0)*magnitude)+magnitude+2;
     System* blockSys = Madd::GetInstance().GetSystem("BlockSystem");
 //*
     for(int x = -size; x < size; x++){
@@ -66,6 +67,7 @@ int main(){
   Madd::GetInstance().Run();
   Madd::GetInstance().Deinit();
   delete gameCamera;
+
 
   return 0;
 }

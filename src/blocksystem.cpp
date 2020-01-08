@@ -56,9 +56,7 @@ void BlockSystem::Init() {
 }
 
 BlockSystem::~BlockSystem(){
-  for(auto & block : blocks){
-    delete block;
-  }
+  std::cout << blocks.size() << std::endl;
 }
 
 bool BlockSystem::Register(Component* component){
@@ -79,9 +77,11 @@ bool BlockSystem::Register(Component* component){
   );
 
     
-  binstance[component->cID] = BlockInstance{};
-  binstance[component->cID].r = r;
+  
+  BlockInstance binst = BlockInstance{};
+  binst.r = r;
 
+  binstance[component->cID] = binst;
   if(!instancerenderSys->Register(&binstance[component->cID].r)){
     binstance.erase(component->cID);
     return false;
@@ -89,6 +89,7 @@ bool BlockSystem::Register(Component* component){
 
   positions.insert(b->position);
   blocks.push_back(dynamic_cast<BlockComponent*>(component));
+  
 
   return true;
 }

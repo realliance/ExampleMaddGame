@@ -10,12 +10,13 @@ Simplex::Simplex(int seed){
     perm[i+256] = n;
   }
   for(int i=0; i<512; i++){
-    permMod12[i] = (short)(perm[i%256] % 12);
+    permMod12[i] = (short)(perm[i] % 12);
   }
   grad2 = {glm::vec2(1,1),glm::vec2(-1,1),glm::vec2(1,-1),glm::vec2(-1,-1),
            glm::vec2(1,0),glm::vec2(-1,0),glm::vec2(1,0),glm::vec2(-1,0),
            glm::vec2(0,1),glm::vec2(0,-1),glm::vec2(0,1),glm::vec2(0,-1)};
 }
+#include <iostream>
 
 double Simplex::Noise(double xin, double yin) {
     double n0, n1, n2; // Noise contributions from the three corners
