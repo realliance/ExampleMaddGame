@@ -12,13 +12,13 @@ int main(){
   Madd::GetInstance().Init();
   
   Madd::GetInstance().Register({
-    new GlfwSystem, &RenderSystem::GetInstance() ,new TextureSystem,
-    new ShaderSystem, new MeshSystem, &MouseEventSystem::GetInstance(),
-    &KeyboardEventSystem::GetInstance(), new CameraSystem, 
-    new FreeCamSystem, new BlockSystem, &InstanceRenderSystem::GetInstance()
+    new GlfwSystem,    new RenderSystem ,new TextureSystem,
+    new ShaderSystem,  new MeshSystem,   new MouseEventSystem,
+    new KeyboardEventSystem,             new CameraSystem, 
+    new FreeCamSystem, new BlockSystem,  new InstanceRenderSystem
   });
 
-  GlfwSystem::EnableDebuggingContext();
+  // GlfwSystem::EnableDebuggingContext();
 
   Madd::GetInstance().InitSystems();
 
@@ -35,7 +35,7 @@ int main(){
   {
     int size = 64;
     float stretch = 64.f;
-    int magnitude = 8;
+    int magnitude = 16;
 
     glm::vec2 offsets[] = {{-1,0},{1,0},{0,-1},{0,1}};
     Simplex s = Simplex(32484092); //as chosen by dice roll;

@@ -55,19 +55,10 @@ void BlockSystem::Init() {
 
 }
 
-void BlockSystem::Deinit(){
-  std::cout << blocks.size() << std::endl;
-  for(auto & [bref, binst] : binstance){
-    instancerenderSys->Unregister(&binst.r);
+BlockSystem::~BlockSystem(){
+  for(auto & block : blocks){
+    delete block;
   }
-  blocks.clear();
-  binstance.clear();
-  shaderSys->Unregister(&shader);
-  meshSys->Unregister(&mesh);
-  textureSys = nullptr;
-  meshSys = nullptr;
-  shaderSys = nullptr;
-  instancerenderSys = nullptr;
 }
 
 bool BlockSystem::Register(Component* component){
