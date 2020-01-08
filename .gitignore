@@ -39,3 +39,5 @@ example
 callgrind.out.*
 *.svg
 *.rdc
+*.log
+vgcore.*

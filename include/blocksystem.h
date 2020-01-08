@@ -24,7 +24,7 @@ struct BlockInstance {
 
 class BlockSystem : public System {
   void Init();
-  void Deinit();
+  ~BlockSystem();
   bool Register(Component* component);
   bool Unregister(Component* component);
   void Update();

@@ -4,6 +4,8 @@
 #include <components/keyboardeventcomponent.h>
 #include <components/mouseeventcomponent.h>
 class Madd;
+class KeyboardEventSystem;
+class MouseEventSystem;
 class GameCamera{
 public:
   GameCamera();
@@ -14,6 +16,7 @@ private:
   KeyboardEventComponent mouselockEvent;
   MouseEventComponent mouseMovementEvent;
   KeyboardEventComponent keyboardMovementEvent[6];
-  
+  KeyboardEventSystem* keyboardeventsys;
+  MouseEventSystem* mouseeventsys;
 };
 

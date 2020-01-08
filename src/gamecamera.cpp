@@ -8,6 +8,10 @@
 #include <keycodes.h>
 
 GameCamera::GameCamera() {
+
+  mouseeventsys = dynamic_cast<MouseEventSystem*>(Madd::GetInstance().GetSystem("MouseEventSystem"));
+  keyboardeventsys = dynamic_cast<KeyboardEventSystem*>(Madd::GetInstance().GetSystem("KeyboardEventSystem"));
+
   camera = FreeCamSystem::Construct();
 
   mouseMovementEvent = MouseEventComponent{};
@@ -15,7 +19,7 @@ GameCamera::GameCamera() {
   mouseMovementEvent.callback = [](Component* c, WindowComponent* window, float posX, float posY){
     dynamic_cast<FreecamComponent*>(c)->cursor = glm::vec2(posX,posY);
   };
-  MouseEventSystem::GetInstance().Register(&mouseMovementEvent);
+  mouseeventsys->Register(&mouseMovementEvent);
 
   mouselockEvent = KeyboardEventComponent{};
   mouselockEvent.c = &camera;
@@ -23,14 +27,14 @@ GameCamera::GameCamera() {
     FreeCamSystem::ToggleMouseLock(*dynamic_cast<FreecamComponent*>(c), window, key, action);
   };
   mouselockEvent.code = KEY_TAB;
-  KeyboardEventSystem::GetInstance().Register(&mouselockEvent);
+  keyboardeventsys->Register(&mouselockEvent);
   std::vector codes = {KEY_W,KEY_A,KEY_S,KEY_D,KEY_LEFT_SHIFT,KEY_LEFT_CONTROL};
   for(int i = 0; i < 6; i++){
     keyboardMovementEvent[i] = KeyboardEventComponent{};
     keyboardMovementEvent[i].c = &camera;
     keyboardMovementEvent[i].callback = GameCamera::HandleEvent;
     keyboardMovementEvent[i].code = codes[i];
-    KeyboardEventSystem::GetInstance().Register(&keyboardMovementEvent[i]);
+    keyboardeventsys->Register(&keyboardMovementEvent[i]);
   }
   Madd::GetInstance().GetSystem("FreeCamSystem")->Register(&camera);
 }
@@ -75,9 +79,9 @@ void GameCamera::HandleEvent(Component* _c, WindowComponent* window, int key, in
 }
 
 void GameCamera::Unregister(){
-  MouseEventSystem::GetInstance().Unregister(&mouseMovementEvent);
-  KeyboardEventSystem::GetInstance().Unregister(&mouselockEvent);
+  mouseeventsys->Unregister(&mouseMovementEvent);
+  mouseeventsys->Unregister(&mouselockEvent);
   for(int i = 0; i < 6; i++){
-    KeyboardEventSystem::GetInstance().Unregister(&keyboardMovementEvent[i]);
+    keyboardeventsys->Unregister(&keyboardMovementEvent[i]);
   }
 }
