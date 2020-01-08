@@ -12,7 +12,7 @@ int main(){
   Madd::GetInstance().Init();
   
   Madd::GetInstance().Register({
-    new GlfwSystem,&RenderSystem::GetInstance() ,new TextureSystem,
+    new GlfwSystem, &RenderSystem::GetInstance() ,new TextureSystem,
     new ShaderSystem, new MeshSystem, &MouseEventSystem::GetInstance(),
     &KeyboardEventSystem::GetInstance(), new CameraSystem, 
     new FreeCamSystem, new BlockSystem, &InstanceRenderSystem::GetInstance()
@@ -33,13 +33,13 @@ int main(){
   gameCamera->camera.movementSpeed = 4.f;
 
   {
-    int size = 32;
+    int size = 64;
     float stretch = 64.f;
     int magnitude = 8;
 
     glm::vec2 offsets[] = {{-1,0},{1,0},{0,-1},{0,1}};
     Simplex s = Simplex(32484092); //as chosen by dice roll;
-    gameCamera->camera.camera.pos.y = (s.Noise(0,0)*magnitude)+magnitude + 4.f;
+    gameCamera->camera.camera.pos.y = (s.Noise(0,0)*magnitude)+magnitude;
     System* blockSys = Madd::GetInstance().GetSystem("BlockSystem");
 //*
     for(int x = -size; x < size; x++){

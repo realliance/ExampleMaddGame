@@ -9,10 +9,9 @@ uniform sampler2D textureobj;
 vec4 FragTexture;
 
 void main() {
-  FragColor = vec4(1.0,1.0,1.0,1.0);
-  // if(textureEnabled == 1){
-  //   FragColor = texture(textureobj, TexCoord) * Shade;
-  // }else{
-  //   FragColor = Shade;
-  // }
+  if(textureEnabled == 1){
+    FragColor = texture(textureobj, TexCoord) * Shade;
+  }else{
+    FragColor = Shade;
+  }
 }

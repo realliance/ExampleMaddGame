@@ -56,6 +56,7 @@ void BlockSystem::Init() {
 }
 
 void BlockSystem::Deinit(){
+  std::cout << blocks.size() << std::endl;
   for(auto & [bref, binst] : binstance){
     instancerenderSys->Unregister(&binst.r);
   }

@@ -38,3 +38,4 @@
 example
 callgrind.out.*
 *.svg
+*.rdc
