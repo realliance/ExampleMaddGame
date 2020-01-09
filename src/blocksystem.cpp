@@ -56,7 +56,7 @@ void BlockSystem::Init() {
 }
 
 BlockSystem::~BlockSystem(){
-  std::cout << blocks.size() << std::endl;
+    std::cout << blocks.size() << std::endl;
 }
 
 bool BlockSystem::Register(Component* component){
