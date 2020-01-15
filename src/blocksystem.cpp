@@ -46,6 +46,11 @@ void BlockSystem::Init() {
   mesh.verts = verts;
   mesh.texcoords = texcoords;
   meshSys->Register(&mesh);
+  InstanceConfig c;
+  c.instancedshade = false;
+  c.simplemodel = true;
+  c.updatemodel = false;
+  instancerenderSys->SetConfig(c,&mesh);
 
   shader.fragmentShaderPath = "instanceblock.fs";
   shader.vertexShaderPath = "instanceblock.vs";
@@ -73,9 +78,8 @@ bool BlockSystem::Register(Component* component){
     nullptr, //Texture nullptr will be interpreted as no texture
     &shader, //ShaderComponent
     model, //Model aka position, size, and rotation 
-    glm::vec4(0.0f, 0.2f, 0.2f, 1.f)+glm::vec4(glm::abs(b->position)*0.05f, 0.f) //Shade
+    glm::vec4(0.3f, 0.4f, 0.6f, 1.f) //Shade
   );
-
     
   
   BlockInstance binst = BlockInstance{};

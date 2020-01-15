@@ -15,7 +15,7 @@ public:
 private:
   KeyboardEventComponent mouselockEvent;
   MouseEventComponent mouseMovementEvent;
-  KeyboardEventComponent keyboardMovementEvent[6];
+  KeyboardEventComponent keyboardMovementEvent[7];
   KeyboardEventSystem* keyboardeventsys;
   MouseEventSystem* mouseeventsys;
 };

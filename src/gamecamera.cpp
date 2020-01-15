@@ -13,6 +13,7 @@ GameCamera::GameCamera() {
   keyboardeventsys = dynamic_cast<KeyboardEventSystem*>(Madd::GetInstance().GetSystem("KeyboardEventSystem"));
 
   camera = FreeCamSystem::Construct();
+  camera.camera.far = 1000.f;
 
   mouseMovementEvent = MouseEventComponent{};
   mouseMovementEvent.c = &camera;
@@ -28,8 +29,8 @@ GameCamera::GameCamera() {
   };
   mouselockEvent.code = KEY_TAB;
   keyboardeventsys->Register(&mouselockEvent);
-  std::vector codes = {KEY_W,KEY_A,KEY_S,KEY_D,KEY_LEFT_SHIFT,KEY_LEFT_CONTROL};
-  for(int i = 0; i < 6; i++){
+  std::vector codes = {KEY_W,KEY_A,KEY_S,KEY_D,KEY_LEFT_SHIFT,KEY_LEFT_CONTROL,KEY_LEFT_ALT};
+  for(int i = 0; i < 7; i++){
     keyboardMovementEvent[i] = KeyboardEventComponent{};
     keyboardMovementEvent[i].c = &camera;
     keyboardMovementEvent[i].callback = GameCamera::HandleEvent;
@@ -38,7 +39,7 @@ GameCamera::GameCamera() {
   }
   Madd::GetInstance().GetSystem("FreeCamSystem")->Register(&camera);
 }
-
+#include <iostream>
 void GameCamera::HandleEvent(Component* _c, WindowComponent* window, int key, int action){
   FreecamComponent* c = dynamic_cast<FreecamComponent*>(_c);
   switch (action){
@@ -73,6 +74,12 @@ void GameCamera::HandleEvent(Component* _c, WindowComponent* window, int key, in
   case KEY_LEFT_CONTROL:
     c->movVector.y = -action;
     break;
+  case KEY_LEFT_ALT:
+    if(action == 0){
+      c->movementSpeed /= 8;
+    }else{
+      c->movementSpeed *= 8;
+    }
   default:
     break;
   }

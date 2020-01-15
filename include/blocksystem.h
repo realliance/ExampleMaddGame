@@ -29,7 +29,7 @@ class BlockSystem : public System {
   bool Unregister(Component* component);
   void Update();
   std::string Name() { return "BlockSystem"; }
-  std::vector<std::string> Requires() {return {"MeshSystem","TextureSystem", "ShaderSystem", "RenderSystem"};};
+  std::vector<std::string> Requires() {return {"MeshSystem", "ShaderSystem", "InstanceRenderSystem"};};
 private:
   std::vector<BlockComponent*> blocks;
   std::unordered_map<BlockReferenceID,BlockInstance> binstance;

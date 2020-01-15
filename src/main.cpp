@@ -13,7 +13,7 @@ int main(){
   Madd::GetInstance().Init();
   
   Madd::GetInstance().Register({
-    new GlfwSystem,    new RenderSystem ,new TextureSystem,
+    new GlfwSystem,    //new RenderSystem ,//new TextureSystem,
     new ShaderSystem,  new MeshSystem,   new MouseEventSystem,
     new KeyboardEventSystem,             new CameraSystem, 
     new FreeCamSystem, new BlockSystem,  new InstanceRenderSystem
@@ -21,7 +21,10 @@ int main(){
 
   // GlfwSystem::EnableDebuggingContext();
 
-  Madd::GetInstance().InitSystems();
+  if(!Madd::GetInstance().InitSystems()){
+    std::cout << "Madd failed to start." << std::endl;
+    return 1;
+  }
 
 
   GameCamera* gameCamera = new GameCamera();
@@ -36,9 +39,9 @@ int main(){
 
   std::vector<BlockComponent> blocks;
   {
-    int size = 256;
+    int size = 1024;
     float stretch = 512.f;
-    int magnitude = 256;
+    int magnitude = 32;
 
     glm::vec2 offsets[] = {{-1,0},{1,0},{0,-1},{0,1}};
     Simplex s = Simplex(8); //as chosen by dice roll;
