@@ -41,19 +41,19 @@ int main(){
   {
     int size = 1024;
     float stretch = 512.f;
-    int magnitude = 32;
+    int magnitude = 128;
 
     glm::vec2 offsets[] = {{-1,0},{1,0},{0,-1},{0,1}};
-    Simplex s = Simplex(8); //as chosen by dice roll;
+    Simplex s = Simplex(72354); //as chosen by dice roll;
     gameCamera->camera.camera.pos.y = (s.Noise(0,0)*magnitude)+magnitude+2;
 //*
     for(int x = -size; x < size; x++){
       for(int z = -size; z < size; z++){
-        double y = floor(s.Noise(x/stretch,z/stretch)*magnitude)+magnitude;
+        double y = floor(s.Noise(x/stretch,z/stretch)*magnitude*glm::sin((x)/stretch))+magnitude;
         blocks.push_back(BlockComponent{glm::vec3(x,y,z)});
         int lowest = y;
         for(const auto & offset: offsets){
-          int by = floor(s.Noise((x+offset.x)/stretch,(z+offset.y)/stretch)*magnitude)+magnitude;
+          int by = floor(s.Noise((x+offset.x)/stretch,(z+offset.y)/stretch)*magnitude*glm::sin((x+offset.x)/stretch))+magnitude;
           if(by < lowest){
             lowest = by;
           }

@@ -16,7 +16,6 @@ Simplex::Simplex(int seed){
            glm::vec2(1,0),glm::vec2(-1,0),glm::vec2(1,0),glm::vec2(-1,0),
            glm::vec2(0,1),glm::vec2(0,-1),glm::vec2(0,1),glm::vec2(0,-1)};
 }
-#include <iostream>
 
 double Simplex::Noise(double xin, double yin) {
     double n0, n1, n2; // Noise contributions from the three corners
