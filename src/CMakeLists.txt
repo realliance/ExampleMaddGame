@@ -4,5 +4,5 @@ target_sources(example
         "${DIR}/main.cpp"
         "${DIR}/gamecamera.cpp"
         "${DIR}/blocksystem.cpp"
-        "${DIR}/simplex.cpp"
+        "${DIR}/simplexsystem.cpp"
 )

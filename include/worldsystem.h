@@ -27,6 +27,9 @@ class WorldSystem : public System {
   std::string Name() { return "WorldSystem"; }
   std::vector<std::string> Requires() {return {"BlockSystem"};};
 private:
+  void placeBlocks(WorldComponent* wc);
+  void processXZBlock(int x, int z, WorldComponent* wc);
+  double getY(int x, int z, WorldComponent* wc);
   BlockSystem* blocksys;
   std::vector<WorldComponent*> worlds;
   std::unordered_map<ComponentID, WorldInfo> info;

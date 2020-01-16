@@ -1,7 +1,7 @@
-#include "simplex.h"
+#include "simplexsystem.h"
 #include <random>
 
-Simplex::Simplex(int seed){
+SimplexSystem::Simplex(int seed){
   std::mt19937 mt(seed);
   std::uniform_int_distribution<> dist(0,255);
   for(int i = 0; i < 255; i++){
@@ -17,7 +17,7 @@ Simplex::Simplex(int seed){
            glm::vec2(0,1),glm::vec2(0,-1),glm::vec2(0,1),glm::vec2(0,-1)};
 }
 
-double Simplex::Noise(double xin, double yin) {
+double SimplexSystem::Noise(double xin, double yin) {
     double n0, n1, n2; // Noise contributions from the three corners
     // Skew the input space to determine which simplex cell we're in
     double s = (xin+yin)*F2; // Hairy factor for 2D
@@ -70,7 +70,7 @@ double Simplex::Noise(double xin, double yin) {
     return 70.0 * (n0 + n1 + n2);
   }
 
-int Simplex::fastfloor(double x) {
+int SimplexSystem::fastfloor(double x) {
   int xi = (int)x;
   return x<xi ? xi-1 : xi;
 }

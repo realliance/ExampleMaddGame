@@ -1,7 +1,6 @@
 #include "gamecamera.h"
 #include "madd.h"
 #include "systems.h"
-#include "simplex.h"
 
 #include <components/windowcomponent.h>
 
@@ -37,7 +36,7 @@ int main(){
   gameCamera->camera.movementSpeed = 16.f;
 
 
-  std::vector<BlockComponent> blocks;
+/*  std::vector<BlockComponent> blocks;
   {
     int size = 1024;
     float stretch = 512.f;
@@ -46,7 +45,7 @@ int main(){
     glm::vec2 offsets[] = {{-1,0},{1,0},{0,-1},{0,1}};
     Simplex s = Simplex(72354); //as chosen by dice roll;
     gameCamera->camera.camera.pos.y = (s.Noise(0,0)*magnitude)+magnitude+2;
-//*
+
     for(int x = -size; x < size; x++){
       for(int z = -size; z < size; z++){
         double y = floor(s.Noise(x/stretch,z/stretch)*magnitude*glm::sin((x)/stretch))+magnitude;
@@ -63,14 +62,14 @@ int main(){
         }
       }
     }
-//*/
+
   }
 
   System* blockSys = Madd::GetInstance().GetSystem("BlockSystem");
   std::cout << blocks.size() << std::endl;
   for(BlockComponent& block : blocks){
     blockSys->Register(&block);
-  }
+  }*/
 
   Madd::GetInstance().Run();
   Madd::GetInstance().Deinit();

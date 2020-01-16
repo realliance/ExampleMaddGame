@@ -36,7 +36,34 @@ bool WorldSystem::Unregister(Component* component){
 }
 
 void WorldSystem::Update(){
-  // for (TemplateSystem *t : objects) {
+  for (WorldComponent *wc : worlds) {
+    placeBlocks(wc);
+  }
+}
 
-  // }
+void WorldSystem::placeBlocks(WorldComponent *wc){
+  for(int x = -wc->size; x < wc->size; x++){
+      for(int z = -wc->size; z < wc->size; z++){
+
+      }
+    }
+}
+
+void WorldSystem::processXYBlock(int x, int z, WorldComponent* wc){
+  double y = 
+  blocks.push_back(BlockComponent{glm::vec3(x,y,z)});
+  int lowest = y;
+  for(const auto & offset: offsets){
+    int by = floor(s.Noise((x+offset.x)/stretch,(z+offset.y)/stretch)*magnitude*glm::sin((x+offset.x)/stretch))+magnitude;
+    if(by < lowest){
+      lowest = by;
+    }
+  }
+  for(int sy = lowest+1; sy < y; sy++){
+    blocks.push_back(BlockComponent{glm::vec3(x,sy,z)});
+  }
+}
+
+double WorldSystem::getY(int x, int z, WorldComponent* wc){
+  floor(s.Noise(x/wc->stretch,z/wc->stretch)*wc->magnitude*glm::sin((x)/wc->stretch))+wc->magnitude;
 }

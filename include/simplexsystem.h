@@ -19,15 +19,29 @@
 #include <cmath>
 #include <vector>
 #include <glm/glm.hpp>
+#include "simplexcomponent.h"
+#include <system.h>
+#include <unordered_map>
 
+struct SeedData{
+  short perm[512];
+  short permMod12[512];
+}
 
-class Simplex {
+class SimplexSystem : public System {
   public:
     double Noise(double xin, double yin);
-    Simplex(int seed);
+    ~SimplexSystem();
+    void Init();
+    void Deinit();
+    bool Register(Component* component);
+    bool Unregister(Component* component);
+    void Update();
+    std::string Name() { return "SimplexSystem"; }
+    std::vector<std::string> Requires() {return {};};
   private: 
-    short perm[512];
-    short permMod12[512];
+    std::vector<SimplexComponent*> simplexInstances;
+    std::unordered_map<ComponentID, SeedData> simplexData;
     std::vector<glm::vec2> grad2;
     int fastfloor(double x);
     static const constexpr double sqrt3 = 1.7320508075688772; //3**0.5 in python3.8
