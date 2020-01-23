@@ -4,9 +4,7 @@
 #include <sys/types.h>
 
 struct WorldComponent : public Component{
-  int size;
-  int stretch;
-  int magnitude;
-  int seed;
+  glm::vec3 size;
+  std::string seed;
 };
 

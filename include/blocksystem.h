@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "system.h"
+#include <system.h>
 #include "blockcomponent.h"
 #include <unordered_map>
 #include <unordered_set>
@@ -23,6 +23,7 @@ struct BlockInstance {
 };
 
 class BlockSystem : public System {
+public:
   void Init();
   ~BlockSystem();
   bool Register(Component* component);
