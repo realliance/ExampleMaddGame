@@ -1,23 +1,17 @@
 #include "simplexsystem.h"
 #include <random>
 
-SimplexSystem::Simplex(int seed){
-  std::mt19937 mt(seed);
-  std::uniform_int_distribution<> dist(0,255);
-  for(int i = 0; i < 255; i++){
-    short n = dist(mt);
-    perm[i] = n;
-    perm[i+256] = n;
-  }
-  for(int i=0; i<512; i++){
-    permMod12[i] = (short)(perm[i] % 12);
-  }
-  grad2 = {glm::vec2(1,1),glm::vec2(-1,1),glm::vec2(1,-1),glm::vec2(-1,-1),
-           glm::vec2(1,0),glm::vec2(-1,0),glm::vec2(1,0),glm::vec2(-1,0),
-           glm::vec2(0,1),glm::vec2(0,-1),glm::vec2(0,1),glm::vec2(0,-1)};
+void SimplexSystem::Init(){
+  source = nullptr;
 }
 
 double SimplexSystem::Noise(double xin, double yin) {
+    if(source == nullptr){
+      return NAN;
+    }
+    xin = xin/source->size.x;
+    yin = yin/source->size.z;
+
     double n0, n1, n2; // Noise contributions from the three corners
     // Skew the input space to determine which simplex cell we're in
     double s = (xin+yin)*F2; // Hairy factor for 2D
@@ -43,9 +37,9 @@ double SimplexSystem::Noise(double xin, double yin) {
     // Work out the hashed gradient indices of the three simplex corners
     int ii = i & 255;
     int jj = j & 255;
-    int gi0 = permMod12[ii+perm[jj]];
-    int gi1 = permMod12[ii+i1+perm[jj+j1]];
-    int gi2 = permMod12[ii+1+perm[jj+1]];
+    int gi0 = source->permMod12[ii+source->perm[jj]];
+    int gi1 = source->permMod12[ii+i1+source->perm[jj+j1]];
+    int gi2 = source->permMod12[ii+1+source->perm[jj+1]];
     // Calculate the contribution from the three corners
     double t0 = 0.5 - x0*x0-y0*y0;
     if(t0<0) n0 = 0.0;
@@ -67,10 +61,75 @@ double SimplexSystem::Noise(double xin, double yin) {
     }
     // Add contributions from each corner to get the final noise value.
     // The result is scaled to return values in the interval [-1,1].
-    return 70.0 * (n0 + n1 + n2);
+    return 70.0 * (n0 + n1 + n2) * source->size.y;
   }
 
 int SimplexSystem::fastfloor(double x) {
   int xi = (int)x;
   return x<xi ? xi-1 : xi;
+}
+
+SimplexSystem::~SimplexSystem(){
+
+}
+
+bool SimplexSystem::Register(Component* component){
+  component->cID = Madd::GetInstance().GetNewComponentID();
+  SimplexComponent* sc = dynamic_cast<SimplexComponent*>(component);
+  simplexInstances.push_back(sc);
+  simplexData[sc->cID] = SeedData{};
+  source = &simplexData[sc->cID];
+  source->size = sc->size;
+  initSimplexInst(hashSeed(sc->seed),*source);
+  return true;
+}
+
+void SimplexSystem::Enable(SimplexComponent* sc){
+  if(simplexData.contains(sc->cID)){
+    source = &simplexData[sc->cID];
+  }
+}
+
+void SimplexSystem::initSimplexInst(uint seed, SeedData& sc){
+  std::mt19937 mt(seed);
+  std::uniform_int_distribution<> dist(0,255);
+  for(int i = 0; i < 255; i++){
+    short n = dist(mt);
+    sc.perm[i] = n;
+    sc.perm[i+256] = n;
+  }
+  for(int i=0; i<512; i++){
+    sc.permMod12[i] = (short)(sc.perm[i] % 12);
+  }
+  grad2 = {glm::vec2(1,1),glm::vec2(-1,1),glm::vec2(1,-1),glm::vec2(-1,-1),
+           glm::vec2(1,0),glm::vec2(-1,0),glm::vec2(1,0),glm::vec2(-1,0),
+           glm::vec2(0,1),glm::vec2(0,-1),glm::vec2(0,1),glm::vec2(0,-1)};
+}
+
+uint SimplexSystem::hashSeed(std::string seed){
+  //crc hash
+  uint h = 0;
+  for(const auto& ki : seed){
+    uint highorder = h & 0xf8000000;
+    h = h << 5;
+    h = h ^ (highorder >> 27);
+    h = h ^ ki;
+  }
+  return h % m;
+}
+
+
+bool SimplexSystem::Unregister(Component* component){
+  for(auto i = begin(simplexInstances); i != end(simplexInstances); i++){
+    if((*i)->cID == component->cID){
+      simplexInstances.erase(i);
+      simplexData.erase(component->cID);
+      source = nullptr;
+      return true;
+    }
+  }
+  return false;
+}
+
+void SimplexSystem::Update(){
 }

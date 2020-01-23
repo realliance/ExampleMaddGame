@@ -6,5 +6,7 @@ target_sources(example
     "${DIR}/blocksystem.h"
     "${DIR}/simplexsystem.h"
     "${DIR}/simplexcomponent.h"
+    "${DIR}/worldsystem.h"
+    "${DIR}/worldcomponent.h"
 )
 target_include_directories(example PRIVATE "${example_SOURCE_DIR}/include")

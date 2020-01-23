@@ -23,6 +23,7 @@ struct BlockInstance {
 };
 
 class BlockSystem : public System {
+public:
   void Init();
   ~BlockSystem();
   bool Register(Component* component);

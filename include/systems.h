@@ -11,3 +11,5 @@
 #include <glfwsystem.h>
 #include "blocksystem.h"
 #include <instancerendersystem.h>
+#include "simplexsystem.h"
+#include "worldsystem.h"
