@@ -38,7 +38,8 @@ int main(){
   gameCamera->camera.movementSpeed = 16.f;
 
   WorldComponent world{};
-  world.size = {256, 70, 256};
+  world.stretch = {256, 256, 256};
+  world.size = {256,256};
   world.seed = "test_seed";
   Madd::GetInstance().GetSystem("WorldSystem")->Register(&world);
 

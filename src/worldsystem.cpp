@@ -19,11 +19,11 @@ bool WorldSystem::Register(Component* component){
   worldinfo[component->cID] = WorldInfo{};
   WorldInfo* wi = &worldinfo[component->cID];
   wi->xpos = -w->size.x;
-  wi->zpos = -w->size.z;
+  wi->zpos = -w->size.y;
   wi->finished = false;
   wi->rand = SimplexComponent{};
   wi->rand.seed = w->seed;
-  wi->rand.size = w->size;
+  wi->rand.size = w->stretch;
   wi->world = w;
   simplexsys->Register(&wi->rand);  
   return true;
@@ -50,14 +50,14 @@ void WorldSystem::Update(){
 void WorldSystem::placeBlocks(WorldInfo& info){
   size_t placed = 0;
   for(int x = info.world->size.x; info.xpos < x; info.xpos++){
-    for(int z = info.world->size.z; info.zpos < z; info.zpos++){
+    for(int z = info.world->size.y; info.zpos < z; info.zpos++){
       processXZBlock(info.xpos,info.zpos,info);
       if(placed > 1024){
         return;
       }
         placed++;
     }
-    info.zpos = -info.world->size.z;
+    info.zpos = -info.world->size.y;
   }
   info.finished = true;
 }
@@ -88,6 +88,6 @@ int WorldSystem::getY(int x, int z, WorldInfo& info){
   return floor(
     simplexsys->Noise(x, z) *
     glm::sin((x)/info.world->size.x) *
-    glm::cos((z)/info.world->size.z)
+    glm::cos((z)/info.world->size.y)
   );
 }

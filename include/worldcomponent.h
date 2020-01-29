@@ -4,7 +4,8 @@
 #include <sys/types.h>
 
 struct WorldComponent : public Component{
-  glm::vec3 size;
+  glm::vec2 size;
+  glm::vec3 stretch;
   std::string seed;
 };
 
