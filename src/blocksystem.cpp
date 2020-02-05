@@ -9,7 +9,7 @@ void BlockSystem::Init() {
   renderSys = dynamic_cast<RenderSystem*>(Madd::GetInstance().GetSystem("RenderSystem"));
   instancerenderSys = dynamic_cast<InstanceRenderSystem*>(Madd::GetInstance().GetSystem("InstanceRenderSystem"));
 
-  mesh.modelPath = "wirecube.obj";
+  mesh.modelPath = "cube.obj";
   if(!meshSys->Register(&mesh)){
     throw ("Mesh loading failed");
   }
