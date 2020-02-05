@@ -9,44 +9,10 @@ void BlockSystem::Init() {
   renderSys = dynamic_cast<RenderSystem*>(Madd::GetInstance().GetSystem("RenderSystem"));
   instancerenderSys = dynamic_cast<InstanceRenderSystem*>(Madd::GetInstance().GetSystem("InstanceRenderSystem"));
 
-  // const std::vector<glm::vec3> verts = {
-  //   { 0.5f,  0.5f, -0.5f}, { 0.5f, -0.5f, -0.5f}, {-0.5f, -0.5f, -0.5f},
-  //   {-0.5f, -0.5f, -0.5f}, {-0.5f,  0.5f, -0.5f}, { 0.5f,  0.5f, -0.5f},
-  //   {-0.5f, -0.5f,  0.5f}, { 0.5f, -0.5f,  0.5f}, { 0.5f,  0.5f,  0.5f},
-  //   { 0.5f,  0.5f,  0.5f}, {-0.5f,  0.5f,  0.5f}, {-0.5f, -0.5f,  0.5f}, 
-
-  //   {-0.5f,  0.5f,  0.5f}, {-0.5f,  0.5f, -0.5f}, {-0.5f, -0.5f, -0.5f},
-  //   {-0.5f, -0.5f, -0.5f}, {-0.5f, -0.5f,  0.5f}, {-0.5f,  0.5f,  0.5f},
-  //   { 0.5f, -0.5f, -0.5f}, { 0.5f,  0.5f, -0.5f}, { 0.5f,  0.5f,  0.5f}, 
-  //   { 0.5f,  0.5f,  0.5f}, { 0.5f, -0.5f,  0.5f}, { 0.5f, -0.5f, -0.5f},
-
-  //   {-0.5f, -0.5f, -0.5f}, { 0.5f, -0.5f, -0.5f}, { 0.5f, -0.5f,  0.5f},
-  //   { 0.5f, -0.5f,  0.5f}, {-0.5f, -0.5f,  0.5f}, {-0.5f, -0.5f, -0.5f},
-  //   { 0.5f,  0.5f,  0.5f}, { 0.5f,  0.5f, -0.5f}, {-0.5f,  0.5f, -0.5f},
-  //   {-0.5f,  0.5f, -0.5f}, {-0.5f,  0.5f,  0.5f}, { 0.5f,  0.5f,  0.5f}  
-  // };
-
-  // const std::vector<glm::vec2> texcoords = {
-  //   {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f},
-  //   {1.0f, 1.0f}, {0.0f, 1.0f}, {0.0f, 0.0f},
-  //   {0.0f, 0.0f}, {1.0f, 0.0f}, {1.0f, 1.0f},
-  //   {1.0f, 1.0f}, {0.0f, 1.0f}, {0.0f, 0.0f},
-
-  //   {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f},
-  //   {0.0f, 1.0f}, {0.0f, 0.0f}, {1.0f, 0.0f},
-  //   {1.0f, 0.0f}, {1.0f, 1.0f}, {0.0f, 1.0f},
-  //   {0.0f, 1.0f}, {0.0f, 0.0f}, {1.0f, 0.0f},
-
-  //   {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f},
-  //   {1.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 1.0f},
-  //   {0.0f, 1.0f}, {1.0f, 1.0f}, {1.0f, 0.0f},
-  //   {1.0f, 0.0f}, {0.0f, 0.0f}, {0.0f, 1.0f}
-  // };
-
-  // mesh.verts = verts;
-  // mesh.texcoords = texcoords;
-  mesh.modelPath = "cube.obj";
-  meshSys->Register(&mesh);
+  mesh.modelPath = "wirecube.obj";
+  if(!meshSys->Register(&mesh)){
+    throw ("Mesh loading failed");
+  }
   InstanceConfig c;
   c.instancedshade = false;
   c.simplemodel = true;
@@ -57,8 +23,6 @@ void BlockSystem::Init() {
   shader.vertexShaderPath = "instanceblock.vs";
   shader.enableCulling = true;
   shaderSys->Register(&shader);
-
-
 }
 
 BlockSystem::~BlockSystem(){
