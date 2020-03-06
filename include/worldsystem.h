@@ -28,6 +28,7 @@ public:
   bool Register(Component* component);
   bool Unregister(Component* component);
   void Update();
+  std::vector<ComponentType> Types() { return {WorldComponent{}.Type()};}
   std::string Name() { return "WorldSystem"; }
   std::vector<std::string> Requires() {return {"BlockSystem","SimplexSystem"};};
 private:

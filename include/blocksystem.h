@@ -19,7 +19,7 @@
 typedef ComponentID BlockReferenceID;
 
 struct BlockInstance {
-  RenderedComponent r;
+  InstanceRenderedComponent r;
 };
 
 class BlockSystem : public System {
@@ -29,6 +29,7 @@ public:
   bool Register(Component* component);
   bool Unregister(Component* component);
   void Update();
+  std::vector<ComponentType> Types() { return {BlockComponent{}.Type()};}
   std::string Name() { return "BlockSystem"; }
   std::vector<std::string> Requires() {return {"MeshSystem", "ShaderSystem", "InstanceRenderSystem"};};
 private:

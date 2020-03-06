@@ -25,7 +25,7 @@ bool WorldSystem::Register(Component* component){
   wi->rand.seed = w->seed;
   wi->rand.size = w->stretch;
   wi->world = w;
-  simplexsys->Register(&wi->rand);  
+  Madd::GetInstance().RegisterComponent(&wi->rand);  
   return true;
 }
 
@@ -65,7 +65,7 @@ void WorldSystem::placeBlocks(WorldInfo& info){
 void WorldSystem::processXZBlock(int x, int z, WorldInfo& info){
   int y = getY(x, z, info);
   info.blocks.push_back(BlockComponent{glm::vec3(x,y,z)});
-  blocksys->Register(&info.blocks.back());
+  Madd::GetInstance().RegisterComponent(&info.blocks.back());
   processDepth({x,y,z},info);
 }
 
@@ -80,7 +80,7 @@ void WorldSystem::processDepth(glm::vec3 pos, WorldInfo& info){
   }
   for(int sy = lowest+1; sy < pos.y; sy++){
     info.blocks.push_back(BlockComponent{glm::vec3(pos.x,sy,pos.z)});
-    blocksys->Register(&info.blocks.back());
+    Madd::GetInstance().RegisterComponent(&info.blocks.back());
   }
 }
 

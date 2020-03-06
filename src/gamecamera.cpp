@@ -20,7 +20,7 @@ GameCamera::GameCamera() {
   mouseMovementEvent.callback = [](Component* c, WindowComponent* window, float posX, float posY){
     dynamic_cast<FreecamComponent*>(c)->cursor = glm::vec2(posX,posY);
   };
-  mouseeventsys->Register(&mouseMovementEvent);
+  Madd::GetInstance().RegisterComponent(&mouseMovementEvent);
 
   mouselockEvent = KeyboardEventComponent{};
   mouselockEvent.c = &camera;
@@ -28,16 +28,16 @@ GameCamera::GameCamera() {
     FreeCamSystem::ToggleMouseLock(*dynamic_cast<FreecamComponent*>(c), window, key, action);
   };
   mouselockEvent.code = KEY_TAB;
-  keyboardeventsys->Register(&mouselockEvent);
+  Madd::GetInstance().RegisterComponent(&mouselockEvent);
   std::vector codes = {KEY_W,KEY_A,KEY_S,KEY_D,KEY_LEFT_SHIFT,KEY_LEFT_CONTROL,KEY_LEFT_ALT};
   for(int i = 0; i < 7; i++){
     keyboardMovementEvent[i] = KeyboardEventComponent{};
     keyboardMovementEvent[i].c = &camera;
     keyboardMovementEvent[i].callback = GameCamera::HandleEvent;
     keyboardMovementEvent[i].code = codes[i];
-    keyboardeventsys->Register(&keyboardMovementEvent[i]);
+    Madd::GetInstance().RegisterComponent(&keyboardMovementEvent[i]);
   }
-  Madd::GetInstance().GetSystem("FreeCamSystem")->Register(&camera);
+  Madd::GetInstance().RegisterComponent(&camera);
 }
 #include <iostream>
 void GameCamera::HandleEvent(Component* _c, WindowComponent* window, int key, int action){

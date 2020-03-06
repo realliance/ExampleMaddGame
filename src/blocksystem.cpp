@@ -3,14 +3,10 @@
 #include "madd.h"
 
 void BlockSystem::Init() {
-  textureSys = dynamic_cast<TextureSystem*>(Madd::GetInstance().GetSystem("TextureSystem"));
-  meshSys = dynamic_cast<MeshSystem*>(Madd::GetInstance().GetSystem("MeshSystem"));
-  shaderSys = dynamic_cast<ShaderSystem*>(Madd::GetInstance().GetSystem("ShaderSystem"));
-  renderSys = dynamic_cast<RenderSystem*>(Madd::GetInstance().GetSystem("RenderSystem"));
   instancerenderSys = dynamic_cast<InstanceRenderSystem*>(Madd::GetInstance().GetSystem("InstanceRenderSystem"));
 
   mesh.modelPath = "cube.obj";
-  if(!meshSys->Register(&mesh)){
+  if(!Madd::GetInstance().RegisterComponent(&mesh)){
     throw ("Mesh loading failed");
   }
   InstanceConfig c;
@@ -22,7 +18,7 @@ void BlockSystem::Init() {
   shader.fragmentShaderPath = "instanceblock.fs";
   shader.vertexShaderPath = "instanceblock.vs";
   shader.enableCulling = true;
-  shaderSys->Register(&shader);
+  Madd::GetInstance().RegisterComponent(&shader);
 }
 
 BlockSystem::~BlockSystem(){
@@ -38,7 +34,7 @@ bool BlockSystem::Register(Component* component){
   }
   glm::mat4 model = glm::mat4(1.0f);
   model = glm::translate(model,b->position);
-  RenderedComponent r = RenderedComponent(
+  InstanceRenderedComponent r = InstanceRenderedComponent(
     &mesh, //MeshComponent
     nullptr, //Texture nullptr will be interpreted as no texture
     &shader, //ShaderComponent
@@ -51,7 +47,7 @@ bool BlockSystem::Register(Component* component){
   binst.r = r;
 
   binstance[component->cID] = binst;
-  if(!instancerenderSys->Register(&binstance[component->cID].r)){
+  if(!Madd::GetInstance().RegisterComponent(&binstance[component->cID].r)){
     binstance.erase(component->cID);
     return false;
   }

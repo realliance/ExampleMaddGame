@@ -6,4 +6,7 @@ target_sources(example
         "${DIR}/blocksystem.cpp"
         "${DIR}/simplexsystem.cpp"
         "${DIR}/worldsystem.cpp"
+        "${DIR}/simplexcomponent.cpp"
+        "${DIR}/worldcomponent.cpp"
+        "${DIR}/blockcomponent.cpp"
 )

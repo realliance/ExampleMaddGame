@@ -40,6 +40,7 @@ class SimplexSystem : public System {
     bool Unregister(Component* component);
     void Update();
     void Enable(SimplexComponent* sc);
+    std::vector<ComponentType> Types() { return {SimplexComponent{}.Type()};}
     std::string Name() { return "SimplexSystem"; }
     std::vector<std::string> Requires() {return {};};
   private: 
