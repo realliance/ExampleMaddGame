@@ -9,8 +9,8 @@
 
 GameCamera::GameCamera() {
 
-  mouseeventsys = dynamic_cast<MouseEventSystem*>(Madd::GetInstance().GetSystem("MouseEventSystem"));
-  keyboardeventsys = dynamic_cast<KeyboardEventSystem*>(Madd::GetInstance().GetSystem("KeyboardEventSystem"));
+  mouseeventsys = Madd::GetInstance().GetSystem<MouseEventSystem>();
+  keyboardeventsys = Madd::GetInstance().GetSystem<KeyboardEventSystem>();
 
   camera = FreeCamSystem::Construct();
   camera.camera.far = 1000.f;

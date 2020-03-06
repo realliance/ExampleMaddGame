@@ -34,14 +34,15 @@ struct SeedData{
 class SimplexSystem : public System {
   public:
     double Noise(double xin, double yin);
-    ~SimplexSystem();
+    void Deinit(){}
     void Init();
     bool Register(Component* component);
     bool Unregister(Component* component);
-    void Update();
+    void Update(){}
     void Enable(SimplexComponent* sc);
-    std::vector<ComponentType> Types() { return {SimplexComponent{}.Type()};}
+    std::vector<ComponentType> ComponentTypes() { return {SimplexComponent{}.Type()};}
     std::string Name() { return "SimplexSystem"; }
+    SystemType Type() { return sType; }
     std::vector<std::string> Requires() {return {};};
   private: 
     SeedData* source;
@@ -55,4 +56,5 @@ class SimplexSystem : public System {
     static const constexpr double sqrt3 = 1.7320508075688772; //3**0.5 in python3.8
     static const constexpr double F2 = 0.5*(sqrt3-1.0);
     static const constexpr double G2 = (3.0-sqrt3)/6.0;
+    static SystemType sType;
 };

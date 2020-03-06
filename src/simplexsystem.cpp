@@ -1,6 +1,8 @@
 #include "simplexsystem.h"
 #include <random>
 
+SystemType SimplexSystem::sType = Madd::GetNewSystemType();
+
 void SimplexSystem::Init(){
   source = nullptr;
 }
@@ -69,10 +71,6 @@ int SimplexSystem::fastfloor(double x) {
   return x<xi ? xi-1 : xi;
 }
 
-SimplexSystem::~SimplexSystem(){
-
-}
-
 bool SimplexSystem::Register(Component* component){
   component->cID = Madd::GetInstance().GetNewComponentID();
   SimplexComponent* sc = dynamic_cast<SimplexComponent*>(component);
@@ -129,7 +127,4 @@ bool SimplexSystem::Unregister(Component* component){
     }
   }
   return false;
-}
-
-void SimplexSystem::Update(){
 }

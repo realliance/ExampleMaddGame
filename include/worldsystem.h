@@ -24,19 +24,20 @@ class BlockSystem;
 class WorldSystem : public System {
 public:
   void Init();
-  void Deinit();
+  void Deinit(){}
   bool Register(Component* component);
   bool Unregister(Component* component);
   void Update();
-  std::vector<ComponentType> Types() { return {WorldComponent{}.Type()};}
+  std::vector<ComponentType> ComponentTypes() { return {WorldComponent{}.Type()};}
   std::string Name() { return "WorldSystem"; }
+  SystemType Type() { return sType; }
   std::vector<std::string> Requires() {return {"BlockSystem","SimplexSystem"};};
 private:
   void placeBlocks(WorldInfo& info);
   void processXZBlock(int x, int z, WorldInfo& info);
   int getY(int x, int z, WorldInfo& info);
   void processDepth(glm::vec3 pos, WorldInfo& info);
-  BlockSystem* blocksys;
   SimplexSystem* simplexsys;
   std::unordered_map<ComponentID, WorldInfo> worldinfo;
+  static SystemType sType;
 };

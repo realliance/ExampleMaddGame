@@ -3,14 +3,10 @@
 #include "blocksystem.h"
 #include "simplexsystem.h"
 
+SystemType WorldSystem::sType = Madd::GetNewSystemType();
 
 void WorldSystem::Init() {
-  blocksys = dynamic_cast<BlockSystem*>(Madd::GetInstance().GetSystem("BlockSystem"));
-  simplexsys = dynamic_cast<SimplexSystem*>(Madd::GetInstance().GetSystem("SimplexSystem"));
-}
-
-void WorldSystem::Deinit(){
-
+  simplexsys = Madd::GetInstance().GetSystem<SimplexSystem>();
 }
 
 bool WorldSystem::Register(Component* component){

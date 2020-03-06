@@ -25,12 +25,13 @@ struct BlockInstance {
 class BlockSystem : public System {
 public:
   void Init();
-  ~BlockSystem();
+  void Deinit();
   bool Register(Component* component);
   bool Unregister(Component* component);
   void Update();
-  std::vector<ComponentType> Types() { return {BlockComponent{}.Type()};}
+  std::vector<ComponentType> ComponentTypes() { return {BlockComponent{}.Type()};}
   std::string Name() { return "BlockSystem"; }
+  SystemType Type() { return sType; }
   std::vector<std::string> Requires() {return {"MeshSystem", "ShaderSystem", "InstanceRenderSystem"};};
 private:
   std::vector<BlockComponent*> blocks;
@@ -44,4 +45,5 @@ private:
   ShaderSystem* shaderSys;
   RenderSystem* renderSys;
   InstanceRenderSystem* instancerenderSys;
+  static SystemType sType;
 };

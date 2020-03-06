@@ -2,8 +2,10 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include "madd.h"
 
+SystemType BlockSystem::sType = Madd::GetNewSystemType();
+
 void BlockSystem::Init() {
-  instancerenderSys = dynamic_cast<InstanceRenderSystem*>(Madd::GetInstance().GetSystem("InstanceRenderSystem"));
+  instancerenderSys = Madd::GetInstance().GetSystem<InstanceRenderSystem>();
 
   mesh.modelPath = "cube.obj";
   if(!Madd::GetInstance().RegisterComponent(&mesh)){
@@ -21,7 +23,7 @@ void BlockSystem::Init() {
   Madd::GetInstance().RegisterComponent(&shader);
 }
 
-BlockSystem::~BlockSystem(){
+void BlockSystem::Deinit(){
     std::cout << blocks.size() << std::endl;
 }
 
