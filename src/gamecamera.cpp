@@ -1,11 +1,11 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <gamecamera.h>
 #include <madd.h>
-#include <assets/freecamsystem.h>
+#include <freecamsystem.h>
 #include <components/windowcomponent.h>
 #include <keyboardeventsystem.h>
 #include <mouseeventsystem.h>
-#include <keycodes.h>
+#include <assets/keycodes.h>
 
 GameCamera::GameCamera() {
 

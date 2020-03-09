@@ -7,7 +7,7 @@
 #include <texturesystem.h>
 #include <meshsystem.h>
 #include <camerasystem.h>
-#include <assets/freecamsystem.h>
+#include <freecamsystem.h>
 #include <glfwsystem.h>
 #include "blocksystem.h"
 #include <instancerendersystem.h>

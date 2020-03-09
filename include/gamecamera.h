@@ -1,6 +1,6 @@
 #pragma once
 #include <glm/glm.hpp>
-#include <assets/freecamcomponent.h>
+#include <components/freecamcomponent.h>
 #include <components/keyboardeventcomponent.h>
 #include <components/mouseeventcomponent.h>
 class Madd;
