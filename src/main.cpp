@@ -24,18 +24,19 @@ int main(){
 
     Madd::GetInstance().InitSystems();
 
-    KeyboardEventComponent exitEvent = KeyboardEventComponent{};
-    exitEvent.callback = [](Component* c, WindowComponent* window, int key, int action){Madd::GetInstance().Close();};
-    exitEvent.code = KEY_ESCAPE;
-    Madd::GetInstance().RegisterComponent(&exitEvent);
-
+    KeyboardEventComponent exitCB = KeyboardEventComponent{};
+    exitCB.callback = [](Component* c, WindowComponent* window, int key, int action){Madd::GetInstance().Close();};
+    exitCB.code = KEY_ESCAPE;
     GameCamera* gameCamera = new GameCamera();
-    WindowComponent mainWindow{};
-    mainWindow.height = 9*64;
-    mainWindow.width = 16*64;
-    mainWindow.title = "ExampleMaddGame";
-    mainWindow.cameras.push_back(&gameCamera->camera.camera);
-    Madd::GetInstance().RegisterComponent(&mainWindow);
+    WindowComponent window{};
+    window.height = 9*64;
+    window.width = 16*64;
+    window.title = "ExampleMaddGame";
+    window.cameras.push_back(&gameCamera->camera.camera);
+
+    Entity mainWindow{&exitCB,&window};
+    Madd::GetInstance().CreateEntity(&mainWindow);
+
     gameCamera->camera.movementSpeed = 16.f;
 
     WorldComponent world{};
@@ -46,19 +47,12 @@ int main(){
 
     MeshComponent mesh;
     mesh.modelPath = "fruits.obj";
-    if(!Madd::GetInstance().RegisterComponent(&mesh)){
-      throw ("Mesh loading failed");
-    }
-
     ShaderComponent shader;
     shader.fragmentShaderPath = "default.fs";
     shader.vertexShaderPath = "default.vs";
     shader.enableCulling = true;
-    Madd::GetInstance().RegisterComponent(&shader);
-
     glm::mat4 model = glm::mat4(1.0f);
     model = glm::translate(model,{-40.f,10.f,0.f});
-
     RenderedComponent r = RenderedComponent(
       &mesh, //MeshComponent
       nullptr, //Texture nullptr will be interpreted as no texture
@@ -66,8 +60,9 @@ int main(){
       model, //Model aka position, size, and rotation 
       glm::vec4(0.3f, 0.4f, 0.6f, 1.f) //Shade
     );
-
-    Madd::GetInstance().RegisterComponent(&r);
+    
+    Entity fruits{&mesh,&shader,&r};
+    Madd::GetInstance().CreateEntity(&fruits);
 
     Madd::GetInstance().Run();
     Madd::GetInstance().Deinit();
