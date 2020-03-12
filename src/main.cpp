@@ -12,7 +12,7 @@ int main(){
   try{
     Madd::GetInstance().Init();
     
-    Madd::GetInstance().Register({
+    Madd::GetInstance().LoadSystems({
       new GlfwSystem,    //new RenderSystem ,//new TextureSystem,
       new ShaderSystem,  new MeshSystem,   new MouseEventSystem,
       new KeyboardEventSystem,             new CameraSystem, 
@@ -22,10 +22,7 @@ int main(){
 
     // GlfwSystem::EnableDebuggingContext();
 
-    if(!Madd::GetInstance().InitSystems()){
-      std::cout << "Madd failed to start." << std::endl;
-      return 1;
-    }
+    Madd::GetInstance().InitSystems();
 
     KeyboardEventComponent exitEvent = KeyboardEventComponent{};
     exitEvent.callback = [](Component* c, WindowComponent* window, int key, int action){Madd::GetInstance().Close();};
