@@ -72,7 +72,6 @@ int SimplexSystem::fastfloor(double x) {
 }
 
 bool SimplexSystem::Register(Component* component){
-  component->cID = Madd::GetInstance().GetNewComponentID();
   SimplexComponent* sc = dynamic_cast<SimplexComponent*>(component);
   simplexInstances.push_back(sc);
   simplexData[sc->cID] = SeedData{};

@@ -41,7 +41,7 @@ int main(){
 
     WorldComponent world{};
     world.stretch = {256, 128, 256};
-    world.size = {2,2};
+    world.size = {256,256};
     world.seed = "test_seed";
     Madd::GetInstance().RegisterComponent(&world);
 
@@ -68,7 +68,7 @@ int main(){
     KeyboardEventComponent createFruitEvent = KeyboardEventComponent{};
 
     bool fruitdeleted = false;
-    deleteFruitEvent.callback = [&fruitdeleted,&fruitID](Component* c, WindowComponent* window, int key, int action){
+    deleteFruitEvent.callback = [&fruitdeleted,&fruitID](Component* c, WindowComponent* window, int key, int action) mutable{
       if(action != KEY_PRESS){
         return;
       }
@@ -76,11 +76,11 @@ int main(){
         fruitdeleted = true;
         std::cout << "Fruit Deleted" << std::endl;
       }else{
-        std::cout << "Fruit already Deleted or Error occured." << std::endl;
+        std::cout << "Fruit already Deleted." << std::endl;
       }
     };
     deleteFruitEvent.code = KEY_0;
-    createFruitEvent.callback = [&fruitdeleted,&fruitID,&fruits](Component* c, WindowComponent* window, int key, int action){
+    createFruitEvent.callback = [&fruitdeleted,&fruitID,&fruits](Component* c, WindowComponent* window, int key, int action) mutable{
       if(action != KEY_PRESS){
         return;
       }

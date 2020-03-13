@@ -10,7 +10,6 @@ void WorldSystem::Init() {
 }
 
 bool WorldSystem::Register(Component* component){
-  component->cID = Madd::GetInstance().GetNewComponentID();
   WorldComponent* w = dynamic_cast<WorldComponent*>(component);
   worldinfo[component->cID] = WorldInfo{};
   WorldInfo* wi = &worldinfo[component->cID];
@@ -49,9 +48,10 @@ void WorldSystem::placeBlocks(WorldInfo& info){
     for(int z = info.world->size.y; info.zpos < z; info.zpos++){
       processXZBlock(info.xpos,info.zpos,info);
       if(placed > 1024){
+        info.zpos++;
         return;
       }
-        placed++;
+      placed++;
     }
     info.zpos = -info.world->size.y;
   }

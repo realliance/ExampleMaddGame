@@ -1,5 +1,6 @@
 #include "blocksystem.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtx/string_cast.hpp>
 #include "madd.h"
 
 SystemType BlockSystem::sType = Madd::GetNewSystemType();
@@ -29,9 +30,9 @@ void BlockSystem::Deinit(){
 
 bool BlockSystem::Register(Component* component){
   BlockComponent* b = dynamic_cast<BlockComponent*>(component);
-  b->cID = Madd::GetInstance().GetNewComponentID();
   b->position = glm::floor(b->position);
   if(positions.contains(b->position)){
+    std::cout << "Failed to place block at: " << glm::to_string(b->position) << std::endl;
     return false;
   }
   glm::mat4 model = glm::mat4(1.0f);
